@@ -1,16 +1,34 @@
 @import url('https://fonts.googleapis.com/css2?family=Bahiana&family=Be+Vietnam+Pro:wght@300;400;500;700&display=swap');
 
-/* Container full màn hình */
+/* =========================================
+   1. CHẾ ĐỘ DESKTOP / 2K / 4K (> 900px)
+   ========================================= */
 .gameContainer {
   display: flex;
   justify-content: center;
   align-items: center;
   width: 100vw;
   height: 100vh;
-  background-color: #000;
   margin: 0;
   padding: 0;
   overflow: hidden;
+  position: relative;
+  z-index: 1;
+}
+
+/* Lớp nền mờ thay vì đen */
+.gameContainer::before {
+  content: "";
+  position: absolute;
+  top: -5%; 
+  left: -5%;
+  width: 110%; 
+  height: 110%;
+  background-image: url('/image/background-community.png');
+  background-size: cover;
+  background-position: center;
+  filter: blur(25px) brightness(0.6); 
+  z-index: -1; 
 }
 
 .scaleWrapper {
@@ -33,15 +51,24 @@
   z-index: 1000;
 }
 
-/* Đổi thành background community */
 .consoleBg {
   width: 100%;
   height: 100%;
-  background-image: url('/image/background-community.png'); /* File ảnh nền cộng đồng */
-  background-size: cover;
+  background-image: url('/image/background-community.png'); 
+  /* Chuyển thành contain để đảm bảo không bị cắt viền */
+  background-size: contain;
   background-position: center;
   background-repeat: no-repeat;
   position: absolute;
+  top: 0;
+  left: 0;
+}
+
+/* Container chứa Content */
+.contentArea {
+  position: absolute;
+  width: 100%;
+  height: 100%;
   top: 0;
   left: 0;
 }
@@ -51,7 +78,7 @@
   to   { opacity: 1; transform: translateY(0); }
 }
 
-/* ===== Popup Box (Cùng kích thước nhưng đổi màu nền kính mờ) ===== */
+/* ===== Popup Box ===== */
 .popupBox {
   position: absolute;
   left: 106px;
@@ -62,7 +89,7 @@
   padding: 34px 70px 47px 44px;
   border-radius: 15px;
   border: 2px solid #FFF;
-  background: rgba(30, 45, 100, 0.55); /* Chỉnh lại màu kính mờ cho hợp tone nền xanh đậm */
+  background: rgba(30, 45, 100, 0.55); 
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
   backdrop-filter: blur(12px);
   display: flex;
@@ -82,7 +109,7 @@
 }
 
 .sportTitle {
-  color: #FFD700; /* Màu vàng giống thiết kế Community */
+  color: #FFD700; 
   font-family: 'Bahiana', cursive;
   font-size: 110px;
   font-style: normal;
@@ -110,7 +137,6 @@
   line-height: 1.6;
 }
 
-/* Hàng ảnh */
 .imageGallery {
   display: flex;
   gap: 22px;
@@ -141,7 +167,6 @@
   transform: scale(1.01);
 }
 
-/* Nút Close */
 .closeButton {
   position: absolute;
   top: 15px;
@@ -166,12 +191,12 @@
   transform: scale(1.05);
 }
 
-/* ===== Trạng thái mặc định (Khung nổi text phía dưới) ===== */
+/* ===== Trạng thái mặc định ===== */
 .captionBox {
   position: absolute;
   left: 380px; 
   top: 810px;
-  width: 1000px; /* Độ dài vừa phải, căn giữa theo bản thiết kế */
+  width: 1000px; 
   height: auto;
   box-sizing: border-box;
   padding: 20px 30px;
@@ -195,4 +220,121 @@
   font-size: 20px;
   font-weight: 300;
   line-height: 28px;
+}
+
+
+/* =========================================
+   2. CHẾ ĐỘ MOBILE / TABLET DỌC (<= 900px)
+   ========================================= */
+@media (max-width: 900px) {
+  
+  .gameContainer {
+    display: block;
+    position: relative;
+    width: 100%;
+    height: 100dvh;
+    overflow-x: hidden;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .gameContainer::before {
+    position: fixed;
+  }
+
+  .scaleWrapper {
+    width: 100%;
+    height: auto;
+    min-height: 100dvh;
+    transform: none !important; 
+  }
+
+  .navLayer {
+    width: 100%;
+    height: auto;
+    position: relative; 
+  }
+
+  .consoleBg {
+    position: fixed;
+    background-size: cover; 
+    background-position: center top;
+  }
+  
+  .contentArea {
+    position: relative;
+    width: 100%;
+    height: auto;
+    padding-top: 20px;
+  }
+
+  .mobileScrollContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px 5vw 40px;
+  }
+
+  .captionBox {
+    position: relative;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: auto;
+    padding: 20px;
+    border-radius: 12px;
+    animation: none;
+  }
+  
+  .captionText {
+    font-size: clamp(14px, 4vw, 18px);
+    line-height: 1.5;
+  }
+
+  .popupBox {
+    position: relative;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: auto;
+    padding: 20px;
+    border-radius: 12px;
+    animation: none;
+    backdrop-filter: blur(16px);
+  }
+
+  .titleWrapper {
+    height: auto;
+    margin-bottom: 12px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .sportTitle {
+    font-size: clamp(48px, 12vw, 80px);
+  }
+
+  .sportDescription {
+    height: auto;
+    font-size: clamp(14px, 4vw, 18px);
+    line-height: 1.5;
+    margin-bottom: 20px;
+  }
+
+  .imageGallery {
+    height: auto;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .imageWrapper {
+    width: 100%;
+    height: auto;
+    border-radius: 16px;
+  }
+  
+  .imageWrapper img {
+    width: 100%;
+    height: auto;
+  }
 }

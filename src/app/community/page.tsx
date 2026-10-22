@@ -17,7 +17,7 @@ type CommunityItem = {
 const DEFAULT_TEXT =
   "Community Services: Engineering became an interest of mine because I wanted to help people and communities overcome the various problems that beset their daily lives, but I also hope to empower them in ways beyond that.";
 
-// 2. Dữ liệu cho các popup (Đã cập nhật key khớp với ID của bạn)
+// 2. Dữ liệu cho các popup
 const communityData: Record<string, CommunityItem> = {
   "cerebral-palsy": {
     title: "CEREBRAL PALSY FAMILY ASSOCIATION VIETNAM",
@@ -87,11 +87,13 @@ const communityData: Record<string, CommunityItem> = {
 };
 
 type CommunityKey = keyof typeof communityData;
+const MOBILE_BREAKPOINT = 900;
 
 export default function CommunityPage() {
   const [activeItem, setActiveItem] = useState<CommunityKey | null>(null);
   const [scale, setScale] = useState(1);
   const [navScale, setNavScale] = useState(1);
+  const [isMobile, setIsMobile] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
@@ -101,15 +103,23 @@ export default function CommunityPage() {
       overflow: document.body.style.overflow,
       backgroundColor: document.body.style.backgroundColor,
     };
+    
     document.body.style.margin = '0';
     document.body.style.padding = '0';
     document.body.style.overflow = 'hidden';
-    document.body.style.backgroundColor = '#000';
+    // Đổi sang 'transparent' để nhìn thấy background mờ
+    document.body.style.backgroundColor = 'transparent';
 
     const calculateScale = () => {
-      const scaleX = window.innerWidth / 1920;
-      const scaleY = window.innerHeight / 1080;
-      setScale(Math.max(scaleX, scaleY));
+      const w = window.innerWidth;
+      const h = window.innerHeight;
+      setIsMobile(w <= MOBILE_BREAKPOINT);
+
+      const scaleX = w / 1920;
+      const scaleY = h / 1080;
+      
+      // SỬ DỤNG Math.min để tránh bị cắt hình viền ngoài
+      setScale(Math.min(scaleX, scaleY));
       setNavScale(scaleX);
     };
     calculateScale();
@@ -147,80 +157,136 @@ export default function CommunityPage() {
   const current = activeItem ? communityData[activeItem] : null;
 
   return (
-    <main className={styles.gameContainer}>
+    <main className={`${styles.gameContainer} ${isMobile ? styles.isMobile : ''}`}>
       <div
         className={styles.navLayer}
-        style={{ transform: `scale(${navScale})`, opacity: isMounted ? 1 : 0 }}
+        style={{ transform: isMobile ? 'none' : `scale(${navScale})`, opacity: isMounted ? 1 : 0 }}
       >
         <Nav />
       </div>
 
       <div
         className={styles.scaleWrapper}
-        style={{ transform: `scale(${scale})`, opacity: isMounted ? 1 : 0 }}
+        style={{ transform: isMobile ? 'none' : `scale(${scale})`, opacity: isMounted ? 1 : 0 }}
       >
-        {/* Lớp nền của Community */}
         <div className={styles.consoleBg}></div>
 
-        {current ? (
-          <div key={activeItem} className={styles.popupBox}>
-            <button
-              type="button"
-              className={styles.closeButton}
-              aria-label="Close"
-              onClick={() => {
-                setActiveItem(null);
-                window.history.pushState(null, '', window.location.pathname);
-              }}
-            >
-              <svg width="42" height="42" viewBox="0 0 42 42" fill="none">
-                <path
-                  d="M3 3L39 39M39 3L3 39"
-                  stroke="#FFFFFF"
-                  strokeWidth="2.5"
-                  strokeLinecap="round"
-                />
-              </svg>
-            </button>
-
-            <div className={styles.titleWrapper}>
-              <h1 className={styles.sportTitle}>{current.title}</h1>
-              {current.icon && (
-                <Image
-                  src={current.icon.src}
-                  alt={`${current.title} icon`}
-                  width={current.icon.w}
-                  height={current.icon.h}
-                  className={styles.sportIcon}
-                  style={{
-                    transform: `translate(${current.icon.dx}px, ${current.icon.dy}px)`,
+        <div className={styles.contentArea}>
+          
+          {/* ----- CHẾ ĐỘ DESKTOP ----- */}
+          {!isMobile && (
+            current ? (
+              <div key={activeItem} className={styles.popupBox}>
+                <button
+                  type="button"
+                  className={styles.closeButton}
+                  aria-label="Close"
+                  onClick={() => {
+                    setActiveItem(null);
+                    window.history.pushState(null, '', window.location.pathname);
                   }}
-                />
-              )}
-            </div>
-
-            <p className={styles.sportDescription}>{current.desc}</p>
-            
-            <div className={styles.imageGallery}>
-              {current.images.map((img, index) => (
-                <div key={`${activeItem}-${index}`} className={styles.imageWrapper}>
-                  <Image
-                    src={img.src}
-                    alt={`${activeItem} photo ${index + 1}`}
-                    width={0}
-                    height={0}
-                    sizes="1000px"
-                    style={{ height: '100%', width: 'auto' }}
-                  />
+                >
+                  <svg width="42" height="42" viewBox="0 0 42 42" fill="none">
+                    <path
+                      d="M3 3L39 39M39 3L3 39"
+                      stroke="#FFFFFF"
+                      strokeWidth="2.5"
+                      strokeLinecap="round"
+                    />
+                  </svg>
+                </button>
+  
+                <div className={styles.titleWrapper}>
+                  <h1 className={styles.sportTitle}>{current.title}</h1>
+                  {current.icon && (
+                    <Image
+                      src={current.icon.src}
+                      alt={`${current.title} icon`}
+                      width={current.icon.w}
+                      height={current.icon.h}
+                      className={styles.sportIcon}
+                      style={{
+                        transform: `translate(${current.icon.dx}px, ${current.icon.dy}px)`,
+                      }}
+                    />
+                  )}
                 </div>
-              ))}
+  
+                <p className={styles.sportDescription}>{current.desc}</p>
+                
+                <div className={styles.imageGallery}>
+                  {current.images.map((img, index) => (
+                    <div key={`${activeItem}-${index}`} className={styles.imageWrapper}>
+                      <Image
+                        src={img.src}
+                        alt={`${activeItem} photo ${index + 1}`}
+                        width={0}
+                        height={0}
+                        sizes="1000px"
+                        style={{ height: '100%', width: 'auto' }}
+                      />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ) : (
+              <div key="default" className={styles.captionBox}>
+                <p className={styles.captionText}>{DEFAULT_TEXT}</p>
+              </div>
+            )
+          )}
+
+          {/* ----- CHẾ ĐỘ ĐIỆN THOẠI ----- */}
+          {isMobile && (
+            <div className={styles.mobileScrollContainer}>
+              <div className={styles.captionBox}>
+                <p className={styles.captionText}>{DEFAULT_TEXT}</p>
+              </div>
+
+              {(Object.keys(communityData) as CommunityKey[]).map((key) => {
+                const item = communityData[key];
+                return (
+                  <div key={key} id={key} className={styles.popupBox}>
+                    <div className={styles.titleWrapper}>
+                      <h1 className={styles.sportTitle}>{item.title}</h1>
+                      {item.icon && (
+                        <Image
+                          src={item.icon.src}
+                          alt={`${item.title} icon`}
+                          width={item.icon.w}
+                          height={item.icon.h}
+                          className={styles.sportIcon}
+                          style={{
+                            transform: 'none',
+                            width: 'auto',
+                            height: 'clamp(40px, 12vw, 80px)'
+                          }}
+                        />
+                      )}
+                    </div>
+                    
+                    <p className={styles.sportDescription}>{item.desc}</p>
+                    
+                    <div className={styles.imageGallery}>
+                      {item.images.map((img, idx) => (
+                        <div key={`${key}-img-${idx}`} className={styles.imageWrapper}>
+                          <Image
+                            src={img.src}
+                            alt={`${item.title} photo ${idx + 1}`}
+                            width={400}
+                            height={300}
+                            style={{ width: '100%', height: 'auto', objectFit: 'cover' }}
+                          />
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                );
+              })}
             </div>
-          </div>
-        ) : (
-          <div key="default" className={styles.captionBox}>
-            <p className={styles.captionText}>{DEFAULT_TEXT}</p>
-          </div>
-        )}
+          )}
+
+        </div>
       </div>
     </main>
   );

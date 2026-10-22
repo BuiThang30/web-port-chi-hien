@@ -1,16 +1,34 @@
 @import url('https://fonts.googleapis.com/css2?family=Bahiana&family=Be+Vietnam+Pro:wght@300;400;500;700&display=swap');
 
-/* Container full màn hình */
+/* =========================================
+   1. CHẾ ĐỘ DESKTOP / 2K / 4K (> 900px)
+   ========================================= */
 .gameContainer {
   display: flex;
   justify-content: center;
   align-items: center;
   width: 100vw;
   height: 100vh;
-  background-color: #000;
   margin: 0;
   padding: 0;
   overflow: hidden;
+  position: relative;
+  z-index: 1;
+}
+
+/* Lớp nền mờ thay vì đen */
+.gameContainer::before {
+  content: "";
+  position: absolute;
+  top: -5%; 
+  left: -5%;
+  width: 110%; 
+  height: 110%;
+  background-image: url('/image/background-other.png');
+  background-size: cover;
+  background-position: center;
+  filter: blur(25px) brightness(0.6); 
+  z-index: -1; 
 }
 
 .scaleWrapper {
@@ -38,10 +56,20 @@
   width: 100%;
   height: 100%;
   background-image: url('/image/background-other.png'); 
-  background-size: cover;
+  /* Chuyển thành contain để đảm bảo không cắt viền trên màn hình rộng */
+  background-size: contain;
   background-position: center;
   background-repeat: no-repeat;
   position: absolute;
+  top: 0;
+  left: 0;
+}
+
+/* Container chứa Content để hỗ trợ layout Desktop và Mobile */
+.contentArea {
+  position: absolute;
+  width: 100%;
+  height: 100%;
   top: 0;
   left: 0;
 }
@@ -146,14 +174,13 @@
 .sliderRow {
   display: flex;
   gap: 12px;
-  width: max-content; /* Tự động kéo dài tuỳ theo số lượng ảnh ngang dọc của toàn bộ hàng */
+  width: max-content;
   height: 100%;
 }
 
-/* KHÔNG FIX CỨNG WIDTH - Chỉ khoá Height */
 .certImageWrapper {
   position: relative;
-  height: 175px; 
+  height: 100%; 
   background-color: #FFF; 
   flex-shrink: 0;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
@@ -164,7 +191,6 @@
   justify-content: center;
 }
 
-/* Hình ảnh thả width: auto để nó tự điều chỉnh tỷ lệ */
 .certImg {
   width: auto;
   height: 100%;
@@ -172,7 +198,6 @@
 }
 
 /* === CSS KEYFRAMES CHO ANIMATION TRƯỢT === */
-
 @keyframes slideLeft {
   0% { transform: translateX(0); }
   100% { transform: translateX(-50%); }
@@ -183,7 +208,6 @@
   100% { transform: translateX(0); }
 }
 
-/* Cài đặt thời gian chạy slide (25 giây 1 vòng, có thể tăng/giảm nếu muốn chạy nhanh/chậm) */
 .slideLeft {
   animation: slideLeft 30s linear infinite;
 }
@@ -191,7 +215,6 @@
   animation: slideRight 30s linear infinite;
 }
 
-/* Dừng animation khi hover vào hàng để xem kỹ ảnh */
 .sliderRow:hover {
   animation-play-state: paused;
 }
@@ -214,4 +237,100 @@
   font-size: 26px;
   font-weight: 400;
   line-height: 1.6;
+}
+
+/* =========================================
+   2. CHẾ ĐỘ MOBILE / TABLET DỌC (<= 900px)
+   ========================================= */
+@media (max-width: 900px) {
+  
+  .gameContainer {
+    display: block;
+    position: relative;
+    width: 100%;
+    height: 100dvh;
+    overflow-x: hidden;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .gameContainer::before {
+    position: fixed;
+  }
+
+  .scaleWrapper {
+    width: 100%;
+    height: auto;
+    min-height: 100dvh;
+    transform: none !important; 
+  }
+
+  .navLayer {
+    width: 100%;
+    height: auto;
+    position: relative; 
+  }
+
+  .consoleBg {
+    position: fixed;
+    background-size: cover; 
+    background-position: center top;
+  }
+  
+  .contentArea {
+    position: relative;
+    width: 100%;
+    height: auto;
+    padding-top: 20px;
+  }
+
+  .mobileScrollContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px 5vw 40px;
+  }
+
+  .popupBox {
+    position: relative;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: auto;
+    padding: 20px;
+    border-radius: 12px;
+    animation: none;
+    backdrop-filter: blur(16px);
+  }
+
+  .titleColumn {
+    width: 100%;
+    margin-top: 0;
+    margin-bottom: 20px;
+    align-items: center;
+  }
+
+  .sportTitle {
+    font-size: clamp(48px, 12vw, 80px);
+    text-align: center;
+  }
+
+  /* Thu nhỏ chiều cao của thanh trượt ảnh trên thiết bị di động để vừa màn hình */
+  .sliderWrapper {
+    height: 110px; 
+  }
+  
+  .certImageWrapper {
+    height: 110px;
+  }
+  
+  .sliderColumn {
+    gap: 16px;
+  }
+
+  .placeholderText {
+    margin-top: 10px;
+    font-size: clamp(16px, 4vw, 20px);
+    text-align: center;
+  }
 }

@@ -5,7 +5,7 @@ import Image from 'next/image';
 import Nav from '@/components/nav/nav';
 import styles from './page.module.css';
 
-// 1. Định nghĩa Type cho cấu trúc có Slide
+// Định nghĩa Type cho cấu trúc có Slide
 type Slide = {
   subtitle: string;
   desc: string;
@@ -22,7 +22,7 @@ type RoboticsItem = {
 const DEFAULT_TEXT =
   "Growing up, I have always been captivated by huge mechanical robots in movies like \"Transformers\" and super intelligent humanoid machines in \"The Terminator.\" Fortunately for me, I got to experience what robots are actually capable of and share my love for these buddies with many students in my city.";
 
-// 2. Dữ liệu các mục
+// Dữ liệu các mục
 const roboticsData: Record<string, RoboticsItem> = {
   "overwatch": {
     title: "OVERWATCH",
@@ -73,7 +73,7 @@ const roboticsData: Record<string, RoboticsItem> = {
       {
         subtitle: "GART Expo 2025",
         desc: "This is where I got my first taste of robotics. Although I was only a volunteer and not yet an official member, I was treated like family from the moment I arrived. Surrounded by robots, passion projects, and people who shared my curiosity, I experienced the competitive yet close-knit community of robotics engineers, and it motivated me to become a full member of the club.",
-        images: [{ src: "/image/gart-2025.png" }] // Thay bằng tên file giấy chứng nhận của bạn
+        images: [{ src: "/image/gart-2025.png" }] 
       },
       {
         subtitle: "GART Expo 2026",
@@ -85,12 +85,14 @@ const roboticsData: Record<string, RoboticsItem> = {
 };
 
 type RoboticsKey = keyof typeof roboticsData;
+const MOBILE_BREAKPOINT = 900;
 
 export default function RoboticsPage() {
   const [activeItem, setActiveItem] = useState<RoboticsKey | null>(null);
   const [activeSlide, setActiveSlide] = useState(0); 
   const [scale, setScale] = useState(1);
   const [navScale, setNavScale] = useState(1);
+  const [isMobile, setIsMobile] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
@@ -103,12 +105,19 @@ export default function RoboticsPage() {
     document.body.style.margin = '0';
     document.body.style.padding = '0';
     document.body.style.overflow = 'hidden';
-    document.body.style.backgroundColor = '#000';
+    // Đã đổi từ '#000' sang 'transparent' để hiển thị background mờ
+    document.body.style.backgroundColor = 'transparent';
 
     const calculateScale = () => {
-      const scaleX = window.innerWidth / 1920;
-      const scaleY = window.innerHeight / 1080;
-      setScale(Math.max(scaleX, scaleY));
+      const w = window.innerWidth;
+      const h = window.innerHeight;
+      setIsMobile(w <= MOBILE_BREAKPOINT);
+
+      const scaleX = w / 1920;
+      const scaleY = h / 1080;
+      
+      // SỬ DỤNG Math.min để tránh bị cắt hình viền ngoài
+      setScale(Math.min(scaleX, scaleY));
       setNavScale(scaleX);
     };
     calculateScale();
@@ -150,94 +159,151 @@ export default function RoboticsPage() {
   const slide = current ? current.slides[activeSlide] : null;
 
   return (
-    <main className={styles.gameContainer}>
+    <main className={`${styles.gameContainer} ${isMobile ? styles.isMobile : ''}`}>
       <div
         className={styles.navLayer}
-        style={{ transform: `scale(${navScale})`, opacity: isMounted ? 1 : 0 }}
+        style={{ transform: isMobile ? 'none' : `scale(${navScale})`, opacity: isMounted ? 1 : 0 }}
       >
         <Nav />
       </div>
 
       <div
         className={styles.scaleWrapper}
-        style={{ transform: `scale(${scale})`, opacity: isMounted ? 1 : 0 }}
+        style={{ transform: isMobile ? 'none' : `scale(${scale})`, opacity: isMounted ? 1 : 0 }}
       >
         <div className={styles.consoleBg}></div>
 
-        {current && slide ? (
-          <div key={activeItem} className={styles.popupBox}>
-            <button
-              type="button"
-              className={styles.closeButton}
-              aria-label="Close"
-              onClick={() => {
-                setActiveItem(null);
-                window.history.pushState(null, '', window.location.pathname);
-              }}
-            >
-              <svg width="42" height="42" viewBox="0 0 42 42" fill="none">
-                <path
-                  d="M3 3L39 39M39 3L3 39"
-                  stroke="#FFFFFF"
-                  strokeWidth="2.5"
-                  strokeLinecap="round"
-                />
-              </svg>
-            </button>
-
-            <div className={styles.titleWrapper}>
-              <h1 className={styles.sportTitle}>{current.title}</h1>
-              {current.icon && (
-                <Image
-                  src={current.icon.src}
-                  alt={`${current.title} icon`}
-                  width={current.icon.w}
-                  height={current.icon.h}
-                  className={styles.sportIcon}
-                  style={{
-                    transform: `translate(${current.icon.dx}px, ${current.icon.dy}px)`,
+        <div className={styles.contentArea}>
+          
+          {/* ----- CHẾ ĐỘ DESKTOP ----- */}
+          {!isMobile && (
+            current && slide ? (
+              <div key={activeItem} className={styles.popupBox}>
+                <button
+                  type="button"
+                  className={styles.closeButton}
+                  aria-label="Close"
+                  onClick={() => {
+                    setActiveItem(null);
+                    window.history.pushState(null, '', window.location.pathname);
                   }}
-                />
-              )}
-            </div>
-
-            <h2 className={styles.slideSubtitle}>{slide.subtitle}</h2>
-            <p className={styles.slideDescription}>{slide.desc}</p>
-            
-            <div className={styles.imageGallery}>
-              {slide.images.map((img, index) => (
-                <div key={`${activeItem}-${activeSlide}-${index}`} className={styles.imageWrapper}>
-                  <Image
-                    src={img.src}
-                    alt={`${activeItem} slide ${activeSlide} photo ${index + 1}`}
-                    width={0}
-                    height={0}
-                    sizes="1000px"
-                    style={{ width: 'auto', height: '100%', display: 'block' }}
-                  />
+                >
+                  <svg width="42" height="42" viewBox="0 0 42 42" fill="none">
+                    <path d="M3 3L39 39M39 3L3 39" stroke="#FFFFFF" strokeWidth="2.5" strokeLinecap="round" />
+                  </svg>
+                </button>
+  
+                <div className={styles.titleWrapper}>
+                  <h1 className={styles.sportTitle}>{current.title}</h1>
+                  {current.icon && (
+                    <Image
+                      src={current.icon.src}
+                      alt={`${current.title} icon`}
+                      width={current.icon.w}
+                      height={current.icon.h}
+                      className={styles.sportIcon}
+                      style={{
+                        transform: `translate(${current.icon.dx}px, ${current.icon.dy}px)`,
+                      }}
+                    />
+                  )}
                 </div>
-              ))}
-            </div>
-
-            {current.slides.length > 1 && (
-              <div className={styles.paginationContainer}>
-                {current.slides.map((_, idx) => (
-                  <button
-                    key={idx}
-                    className={`${styles.pageButton} ${activeSlide === idx ? styles.activePage : ''}`}
-                    onClick={() => setActiveSlide(idx)}
-                  >
-                    {idx + 1}
-                  </button>
-                ))}
+  
+                <h2 className={styles.slideSubtitle}>{slide.subtitle}</h2>
+                <p className={styles.slideDescription}>{slide.desc}</p>
+                
+                <div className={styles.imageGallery}>
+                  {slide.images.map((img, index) => (
+                    <div key={`${activeItem}-${activeSlide}-${index}`} className={styles.imageWrapper}>
+                      <Image
+                        src={img.src}
+                        alt={`${activeItem} slide ${activeSlide} photo ${index + 1}`}
+                        width={0}
+                        height={0}
+                        sizes="1000px"
+                        style={{ width: 'auto', height: '100%', display: 'block' }}
+                      />
+                    </div>
+                  ))}
+                </div>
+  
+                {current.slides.length > 1 && (
+                  <div className={styles.paginationContainer}>
+                    {current.slides.map((_, idx) => (
+                      <button
+                        key={idx}
+                        className={`${styles.pageButton} ${activeSlide === idx ? styles.activePage : ''}`}
+                        onClick={() => setActiveSlide(idx)}
+                      >
+                        {idx + 1}
+                      </button>
+                    ))}
+                  </div>
+                )}
               </div>
-            )}
-          </div>
-        ) : (
-          <div key="default" className={styles.captionBox}>
-            <p className={styles.captionText}>{DEFAULT_TEXT}</p>
-          </div>
-        )}
+            ) : (
+              <div key="default" className={styles.captionBox}>
+                <p className={styles.captionText}>{DEFAULT_TEXT}</p>
+              </div>
+            )
+          )}
+
+          {/* ----- CHẾ ĐỘ ĐIỆN THOẠI ----- */}
+          {isMobile && (
+            <div className={styles.mobileScrollContainer}>
+              <div className={styles.captionBox}>
+                <p className={styles.captionText}>{DEFAULT_TEXT}</p>
+              </div>
+
+              {(Object.keys(roboticsData) as RoboticsKey[]).map((key) => {
+                const item = roboticsData[key];
+                return (
+                  <div key={key} id={key} className={styles.popupBox}>
+                    <div className={styles.titleWrapper}>
+                      <h1 className={styles.sportTitle}>{item.title}</h1>
+                      {item.icon && (
+                        <Image
+                          src={item.icon.src}
+                          alt={`${item.title} icon`}
+                          width={item.icon.w}
+                          height={item.icon.h}
+                          className={styles.sportIcon}
+                          style={{
+                            transform: 'none',
+                            width: 'auto',
+                            height: 'clamp(40px, 12vw, 80px)'
+                          }}
+                        />
+                      )}
+                    </div>
+
+                    {/* Render toàn bộ Slide thành danh sách dọc trên mobile */}
+                    {item.slides.map((s, idx) => (
+                      <div key={`${key}-slide-${idx}`} className={styles.mobileSlide}>
+                        <h2 className={styles.slideSubtitle}>{s.subtitle}</h2>
+                        <p className={styles.slideDescription}>{s.desc}</p>
+                        <div className={styles.imageGallery}>
+                          {s.images.map((img, imgIdx) => (
+                            <div key={`${key}-slide-${idx}-img-${imgIdx}`} className={styles.imageWrapper}>
+                              <Image
+                                src={img.src}
+                                alt={`${item.title} photo`}
+                                width={400}
+                                height={300}
+                                style={{ width: '100%', height: 'auto', objectFit: 'cover' }}
+                              />
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                );
+              })}
+            </div>
+          )}
+
+        </div>
       </div>
     </main>
   );

@@ -18,22 +18,18 @@ const otherData: Record<string, OtherItem> = {
     title: "ACHIEVEMENT",
     type: "achievements",
     rows: [
-      // Hàng 1: Có 4 ảnh (Trượt ->)
       [
         { src: "/image/cert-1.png" }, { src: "/image/cert-2.png" },
         { src: "/image/cert-3.png" }, { src: "/image/cert-4.png" }
       ],
-      // Hàng 2: Có 4 ảnh (Trượt <-)
       [
         { src: "/image/cert-5.png" }, { src: "/image/cert-6.png" },
         { src: "/image/cert-7.png" }, { src: "/image/cert-8.png" }
       ],
-      // Hàng 3: Có 5 ảnh (Trượt ->)
       [
         { src: "/image/cert-9.png" }, { src: "/image/cert-10.png" },
         { src: "/image/cert-11.png" }, { src: "/image/cert-12.png" }, { src: "/image/cert-13.png" }
       ],
-      // Hàng 4: Có 7 ảnh (Trượt <-)
       [
         { src: "/image/cert-14.png" }, { src: "/image/cert-15.png" },
         { src: "/image/cert-16.png" }, { src: "/image/cert-17.png" }, 
@@ -48,11 +44,13 @@ const otherData: Record<string, OtherItem> = {
 };
 
 type OtherKey = keyof typeof otherData;
+const MOBILE_BREAKPOINT = 900;
 
 export default function OtherPage() {
   const [activeItem, setActiveItem] = useState<OtherKey | null>(null);
   const [scale, setScale] = useState(1);
   const [navScale, setNavScale] = useState(1);
+  const [isMobile, setIsMobile] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
@@ -62,15 +60,23 @@ export default function OtherPage() {
       overflow: document.body.style.overflow,
       backgroundColor: document.body.style.backgroundColor,
     };
+    
     document.body.style.margin = '0';
     document.body.style.padding = '0';
     document.body.style.overflow = 'hidden';
-    document.body.style.backgroundColor = '#000';
+    // Đổi sang 'transparent' để nhìn thấy background mờ (blur)
+    document.body.style.backgroundColor = 'transparent';
 
     const calculateScale = () => {
-      const scaleX = window.innerWidth / 1920;
-      const scaleY = window.innerHeight / 1080;
-      setScale(Math.max(scaleX, scaleY));
+      const w = window.innerWidth;
+      const h = window.innerHeight;
+      setIsMobile(w <= MOBILE_BREAKPOINT);
+
+      const scaleX = w / 1920;
+      const scaleY = h / 1080;
+      
+      // SỬ DỤNG Math.min để tránh bị cắt hình viền ngoài
+      setScale(Math.min(scaleX, scaleY));
       setNavScale(scaleX);
     };
     calculateScale();
@@ -108,93 +114,155 @@ export default function OtherPage() {
   const current = activeItem ? otherData[activeItem] : null;
 
   return (
-    <main className={styles.gameContainer}>
+    <main className={`${styles.gameContainer} ${isMobile ? styles.isMobile : ''}`}>
       <div
         className={styles.navLayer}
-        style={{ transform: `scale(${navScale})`, opacity: isMounted ? 1 : 0 }}
+        style={{ transform: isMobile ? 'none' : `scale(${navScale})`, opacity: isMounted ? 1 : 0 }}
       >
         <Nav />
       </div>
 
       <div
         className={styles.scaleWrapper}
-        style={{ transform: `scale(${scale})`, opacity: isMounted ? 1 : 0 }}
+        style={{ transform: isMobile ? 'none' : `scale(${scale})`, opacity: isMounted ? 1 : 0 }}
       >
         <div className={styles.consoleBg}></div>
 
-        {current && (
-          <div key={activeItem} className={styles.popupBox}>
-            <button
-              type="button"
-              className={styles.closeButton}
-              aria-label="Close"
-              onClick={() => {
-                setActiveItem(null);
-                window.history.pushState(null, '', window.location.pathname);
-              }}
-            >
-              <svg width="42" height="42" viewBox="0 0 42 42" fill="none">
-                <path
-                  d="M3 3L39 39M39 3L3 39"
-                  stroke="#FFFFFF"
-                  strokeWidth="2.5"
-                  strokeLinecap="round"
-                />
-              </svg>
-            </button>
+        <div className={styles.contentArea}>
 
-            {current.type === 'achievements' && (
-              <div className={styles.achievementsLayout}>
-                <div className={styles.titleColumn}>
-                  <h1 className={styles.sportTitle}>{current.title}</h1>
-                </div>
+          {/* ----- CHẾ ĐỘ DESKTOP ----- */}
+          {!isMobile && current && (
+            <div key={activeItem} className={styles.popupBox}>
+              <button
+                type="button"
+                className={styles.closeButton}
+                aria-label="Close"
+                onClick={() => {
+                  setActiveItem(null);
+                  window.history.pushState(null, '', window.location.pathname);
+                }}
+              >
+                <svg width="42" height="42" viewBox="0 0 42 42" fill="none">
+                  <path
+                    d="M3 3L39 39M39 3L3 39"
+                    stroke="#FFFFFF"
+                    strokeWidth="2.5"
+                    strokeLinecap="round"
+                  />
+                </svg>
+              </button>
 
-                <div className={styles.sliderColumn}>
-                  {current.rows?.map((row, index) => {
-                    const isSlideRight = index % 2 === 0;
-                    
-                    return (
-                      <div key={index} className={styles.sliderWrapper}>
-                        <div
-                          className={`${styles.sliderRow} ${
-                            isSlideRight ? styles.slideRight : styles.slideLeft
-                          }`}
-                        >
-                          {/* SỰ THAY ĐỔI: Lặp mảng 4 lần thay vì 2 lần để đảm bảo chiều dài luôn thừa đủ che kín khoảng trống */}
-                          {[...Array(4)].map((_, loopIndex) => (
-                            <React.Fragment key={loopIndex}>
-                              {row.map((img, imgIdx) => (
-                                <div key={`${loopIndex}-${imgIdx}`} className={styles.certImageWrapper}>
-                                  <Image
-                                    src={img.src}
-                                    alt={`Certificate ${index}-${imgIdx}`}
-                                    width={0}
-                                    height={0}
-                                    sizes="500px"
-                                    className={styles.certImg}
-                                  />
-                                </div>
-                              ))}
-                            </React.Fragment>
-                          ))}
+              {current.type === 'achievements' && (
+                <div className={styles.achievementsLayout}>
+                  <div className={styles.titleColumn}>
+                    <h1 className={styles.sportTitle}>{current.title}</h1>
+                  </div>
+
+                  <div className={styles.sliderColumn}>
+                    {current.rows?.map((row, index) => {
+                      const isSlideRight = index % 2 === 0;
+                      
+                      return (
+                        <div key={index} className={styles.sliderWrapper}>
+                          <div
+                            className={`${styles.sliderRow} ${
+                              isSlideRight ? styles.slideRight : styles.slideLeft
+                            }`}
+                          >
+                            {[...Array(4)].map((_, loopIndex) => (
+                              <React.Fragment key={loopIndex}>
+                                {row.map((img, imgIdx) => (
+                                  <div key={`${loopIndex}-${imgIdx}`} className={styles.certImageWrapper}>
+                                    <Image
+                                      src={img.src}
+                                      alt={`Certificate ${index}-${imgIdx}`}
+                                      width={0}
+                                      height={0}
+                                      sizes="500px"
+                                      className={styles.certImg}
+                                    />
+                                  </div>
+                                ))}
+                              </React.Fragment>
+                            ))}
+                          </div>
                         </div>
-                      </div>
-                    );
-                  })}
+                      );
+                    })}
+                  </div>
                 </div>
-              </div>
-            )}
+              )}
 
-            {current.type === 'placeholder' && (
-              <div className={styles.placeholderLayout}>
-                <h1 className={styles.sportTitle}>{current.title}</h1>
-                <p className={styles.placeholderText}>
-                  Content for this section is currently being updated. Please check back later!
-                </p>
-              </div>
-            )}
-          </div>
-        )}
+              {current.type === 'placeholder' && (
+                <div className={styles.placeholderLayout}>
+                  <h1 className={styles.sportTitle}>{current.title}</h1>
+                  <p className={styles.placeholderText}>
+                    Content for this section is currently being updated. Please check back later!
+                  </p>
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* ----- CHẾ ĐỘ ĐIỆN THOẠI ----- */}
+          {isMobile && (
+            <div className={styles.mobileScrollContainer}>
+              {(Object.keys(otherData) as OtherKey[]).map((key) => {
+                const item = otherData[key];
+                return (
+                  <div key={key} id={key} className={styles.popupBox}>
+                    <div className={styles.titleColumn}>
+                      <h1 className={styles.sportTitle}>{item.title}</h1>
+                    </div>
+
+                    {item.type === 'achievements' && (
+                      <div className={styles.sliderColumn}>
+                        {item.rows?.map((row, index) => {
+                          const isSlideRight = index % 2 === 0;
+                          return (
+                            <div key={index} className={styles.sliderWrapper}>
+                              <div
+                                className={`${styles.sliderRow} ${
+                                  isSlideRight ? styles.slideRight : styles.slideLeft
+                                }`}
+                              >
+                                {[...Array(4)].map((_, loopIndex) => (
+                                  <React.Fragment key={loopIndex}>
+                                    {row.map((img, imgIdx) => (
+                                      <div key={`${loopIndex}-${imgIdx}`} className={styles.certImageWrapper}>
+                                        <Image
+                                          src={img.src}
+                                          alt={`Certificate ${index}-${imgIdx}`}
+                                          width={0}
+                                          height={0}
+                                          sizes="500px"
+                                          className={styles.certImg}
+                                        />
+                                      </div>
+                                    ))}
+                                  </React.Fragment>
+                                ))}
+                              </div>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    )}
+
+                    {item.type === 'placeholder' && (
+                      <div className={styles.placeholderLayout}>
+                        <p className={styles.placeholderText}>
+                          Content for this section is currently being updated. Please check back later!
+                        </p>
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          )}
+
+        </div>
       </div>
     </main>
   );

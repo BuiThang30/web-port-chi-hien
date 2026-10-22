@@ -1,8 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=ABeeZee&family=Bahiana&family=Be+Vietnam+Pro:wght@400&display=swap');
 
 /* =========================================
-   CHẾ ĐỘ DESKTOP / TABLET NGANG / 2K / 4K
-   Khung thiết kế 1920x1080, JS tính scale cho vừa mọi màn hình
+   1. CHẾ ĐỘ DESKTOP / 2K / 4K (> 900px)
    ========================================= */
 .gameContainer {
   display: flex;
@@ -11,10 +10,26 @@
   width: 100vw;
   height: 100vh;
   height: 100dvh;
-  background-color: #000;
   margin: 0;
   padding: 0;
   overflow: hidden;
+  position: relative; 
+  z-index: 1;
+}
+
+/* Lớp nền mờ lấp đầy các khoảng trống */
+.gameContainer::before {
+  content: "";
+  position: absolute;
+  top: -5%; 
+  left: -5%;
+  width: 110%; 
+  height: 110%;
+  background-image: url('/image/background-home.png');
+  background-size: cover;
+  background-position: center;
+  filter: blur(25px) brightness(0.6); 
+  z-index: -1; 
 }
 
 .scaleWrapper {
@@ -30,7 +45,7 @@
   width: 100%;
   height: 100%;
   background-image: url('/image/background-home.png');
-  background-size: cover;
+  background-size: contain; 
   background-position: center;
   background-repeat: no-repeat;
   position: absolute;
@@ -47,7 +62,7 @@
   transform: translateX(-50%);
 }
 
-/* ---------- PHẦN 1: NỘI DUNG TOP ---------- */
+/* ---------- NỘI DUNG TOP ---------- */
 .topContent {
   position: absolute;
   top: 0;
@@ -55,14 +70,11 @@
   width: 100%;
 }
 
-/* --- HOME --- */
 .titleHowToPlay {
   color: #5284F7;
   font-family: 'Bahiana', cursive;
-  font-size: 122.182px;
-  font-style: normal;
+  font-size: 122px;
   font-weight: 400;
-  line-height: normal;
   text-align: center;
   margin: 30px 0 0 0;
 }
@@ -74,13 +86,11 @@
   -webkit-text-stroke-color: #000;
   font-family: "Be Vietnam Pro", sans-serif;
   font-size: 24px;
-  font-style: normal;
   font-weight: 400;
-  line-height: normal;
   margin: 10px 0;
 }
 
-/* --- ABOUT ME --- */
+/* ---------- ABOUT ME ---------- */
 .aboutContent {
   display: flex;
   justify-content: center;
@@ -106,8 +116,6 @@
   text-align: justify;
   font-family: "Be Vietnam Pro", sans-serif;
   font-size: 22px;
-  font-style: normal;
-  font-weight: 400;
   line-height: 1.4;
   background-color: rgba(255, 255, 255, 0.75);
   border-radius: 12px;
@@ -115,15 +123,15 @@
   height: fit-content;
 }
 
-/* --- SELECT THE MEMORY --- */
+/* ---------- MEMORY PANEL ---------- */
 .memoryPanel {
   background-color: rgba(255, 255, 255, 0.7);
   border-radius: 12px;
   width: 90%;
-  height: 444px;
-  margin: 20px auto 0;
+  height: 464px;
+  margin: 10px auto 0;
   display: flex;
-  padding: 30px 40px;
+  padding: 20px 20px;
   box-sizing: border-box;
   box-shadow: 2px 2px 10px rgba(0,0,0,0.1);
 }
@@ -140,22 +148,17 @@
   color: #5285F7;
   font-family: 'Bahiana', cursive;
   font-size: 64px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 1;
   cursor: pointer;
   margin: 0;
   transition: transform 0.2s;
   -webkit-tap-highlight-color: transparent;
   user-select: none;
-  text-decoration: none; /* Bỏ gạch chân mặc định của thẻ Link */
-  display: block; /* Đảm bảo nút bấm phủ đầy bề ngang text */
+  text-decoration: none;
+  display: block;
 }
-
 .categoryItem:hover { 
   transform: translateX(10px); 
 }
-
 .categoryActive {
   text-decoration: underline;
   text-underline-offset: 6px;
@@ -177,9 +180,6 @@
   text-decoration: none;
   font-family: 'Bahiana', cursive;
   font-size: 40px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 1;
   cursor: pointer;
   margin: 0;
   transition: color 0.2s;
@@ -192,7 +192,7 @@
   to   { opacity: 1; transform: translateY(0); }
 }
 
-/* ---------- PHẦN 2: MENU VÀ TEXT ĐÁY ---------- */
+/* ---------- MENU VÀ TEXT ĐÁY ---------- */
 .menuContainer {
   position: absolute;
   bottom: 250px;
@@ -207,9 +207,6 @@
   color: #FFFFF6;
   font-family: 'Bahiana', cursive;
   font-size: 48px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: normal;
   cursor: pointer;
   transition: transform 0.2s ease;
   -webkit-tap-highlight-color: transparent;
@@ -226,9 +223,7 @@
   color: #FCFFC6;
   text-shadow: 4px 4px 0 #CC6B24;
   font-family: 'Bahiana', cursive;
-  font-size: 181.481px;
-  font-style: normal;
-  font-weight: 400;
+  font-size: 181px;
   line-height: 0.8;
   text-align: center;
   margin: 0;
@@ -243,9 +238,6 @@
   text-align: justify;
   font-family: 'ABeeZee', sans-serif;
   font-size: 24px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: normal;
   padding: 0 50px;
   margin: 0;
   box-sizing: border-box;
@@ -253,158 +245,168 @@
 }
 
 /* =========================================
-   CHẾ ĐỘ MOBILE / TABLET DỌC (< 900px)
-   Không scale nữa, dùng layout fluid theo viewport
+   2. CHẾ ĐỘ MOBILE / TABLET DỌC (<= 900px)
    ========================================= */
-.isMobile.gameContainer {
-  display: block;
-  position: fixed;
-  inset: 0;
-  width: 100%;
-  height: 100dvh;
-  overflow-x: hidden;
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
+@media (max-width: 900px) {
+  .gameContainer {
+    display: block;
+    position: relative;
+    width: 100%;
+    height: 100dvh;
+    overflow-x: hidden;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  .gameContainer::before {
+    position: fixed;
+  }
+
+  .scaleWrapper {
+    width: 100%;
+    height: auto;
+    min-height: 100dvh;
+    transform: none !important; 
+  }
+
+  .consoleBg {
+    position: fixed;
+    background-position: center top;
+    background-size: cover; /* Mobile có thể dùng lại cover để full màn hình điện thoại */
+  }
+
+  .screenArea {
+    position: relative;
+    top: 0;
+    left: 0;
+    transform: none;
+    width: 100%;
+    height: auto;
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    padding: clamp(24px, 9vh, 80px) 5vw clamp(16px, 4vh, 40px);
+    box-sizing: border-box;
+    gap: 16px;
+  }
+
+  .topContent {
+    position: relative;
+    flex: 1 1 auto;
+    width: 100%;
+  }
+
+  .titleHowToPlay {
+    font-size: clamp(48px, 17vw, 110px);
+    margin: 0;
+    line-height: 1;
+  }
+  
+  .instructionText {
+    font-size: clamp(14px, 3.8vw, 22px);
+    margin: 8px 0;
+  }
+
+  .aboutContent {
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    padding: 0;
+    margin-top: 8px;
+  }
+  
+  .aboutImageContainer {
+    width: clamp(160px, 50vw, 280px);
+    height: auto;
+    aspect-ratio: 7 / 9.5;
+    border-width: 4px;
+  }
+  
+  .aboutTextBox {
+    font-size: clamp(14px, 3.8vw, 20px);
+    padding: 16px 18px;
+    text-align: left;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .memoryPanel {
+    width: 100%;
+    height: auto;
+    min-height: 0;
+    flex-direction: column;
+    padding: 18px 20px;
+    margin: 8px 0 0;
+    gap: 12px;
+  }
+  
+  .memoryLeftCol {
+    border-right: none;
+    border-bottom: 3px solid #5284F7;
+    padding-right: 0;
+    padding-bottom: 14px;
+    gap: 10px;
+  }
+  
+  .categoryItem {
+    font-size: clamp(28px, 8.5vw, 52px);
+  }
+  .categoryItem:hover { transform: none; }
+
+  .memoryRightCol {
+    padding-left: 0;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 10px;
+    overflow: visible;
+    min-height: 24px;
+  }
+  
+  .subItem {
+    text-align: left;
+    font-size: clamp(20px, 6vw, 34px);
+    line-height: 1.1;
+  }
+
+  .menuContainer {
+    position: relative;
+    bottom: auto;
+    flex-wrap: wrap;
+    gap: 8px 22px;
+    padding: 4px 0;
+  }
+  
+  .menuText {
+    font-size: clamp(22px, 6.5vw, 40px);
+  }
+  .menuText:hover { transform: none; }
+
+  .mainTitle {
+    position: relative;
+    bottom: auto;
+    font-size: clamp(44px, 15vw, 110px);
+    text-shadow: 3px 3px 0 #CC6B24;
+    line-height: 0.9;
+  }
+  
+  .memoryDescription {
+    position: relative;
+    bottom: auto;
+    padding: 0;
+    font-size: clamp(13px, 3.6vw, 20px);
+    text-align: left;
+    line-height: 1.35;
+  }
 }
 
-.isMobile .scaleWrapper {
-  width: 100%;
-  height: auto;
-  min-height: 100dvh;
-  transform: none !important;
-}
-
-.isMobile .consoleBg {
-  position: fixed;
-  background-position: center top;
-}
-
-.isMobile .screenArea {
-  position: relative;
-  top: 0;
-  left: 0;
-  transform: none;
-  width: 100%;
-  height: auto;
-  min-height: 100dvh;
-  display: flex;
-  flex-direction: column;
-  padding: clamp(24px, 9vh, 80px) 5vw clamp(16px, 4vh, 40px);
-  box-sizing: border-box;
-  gap: 16px;
-}
-
-.isMobile .topContent {
-  position: relative;
-  flex: 1 1 auto;
-  width: 100%;
-}
-
-/* HOME */
-.isMobile .titleHowToPlay {
-  font-size: clamp(48px, 17vw, 110px);
-  margin: 0;
-  line-height: 1;
-}
-.isMobile .instructionText {
-  font-size: clamp(14px, 3.8vw, 22px);
-  margin: 8px 0;
-}
-
-/* ABOUT */
-.isMobile .aboutContent {
-  flex-direction: column;
-  align-items: center;
-  gap: 16px;
-  padding: 0;
-  margin-top: 8px;
-}
-.isMobile .aboutImageContainer {
-  width: clamp(160px, 50vw, 280px);
-  height: auto;
-  aspect-ratio: 7 / 9.5;
-  border-width: 4px;
-}
-.isMobile .aboutTextBox {
-  font-size: clamp(14px, 3.8vw, 20px);
-  padding: 16px 18px;
-  text-align: left;
-  width: 100%;
-  box-sizing: border-box;
-}
-
-/* MEMORY */
-.isMobile .memoryPanel {
-  width: 100%;
-  height: auto;
-  min-height: 0;
-  flex-direction: column;
-  padding: 18px 20px;
-  margin: 8px 0 0;
-  gap: 12px;
-}
-.isMobile .memoryLeftCol {
-  border-right: none;
-  border-bottom: 3px solid #5284F7;
-  padding-right: 0;
-  padding-bottom: 14px;
-  gap: 10px;
-}
-.isMobile .categoryItem {
-  font-size: clamp(28px, 8.5vw, 52px);
-}
-.isMobile .categoryItem:hover { transform: none; }
-
-.isMobile .memoryRightCol {
-  padding-left: 0;
-  align-items: flex-start;
-  justify-content: flex-start;
-  gap: 10px;
-  overflow: visible;
-  min-height: 24px;
-}
-.isMobile .subItem {
-  text-align: left;
-  font-size: clamp(20px, 6vw, 34px);
-  line-height: 1.1;
-}
-
-/* MENU */
-.isMobile .menuContainer {
-  position: relative;
-  bottom: auto;
-  flex-wrap: wrap;
-  gap: 8px 22px;
-  padding: 4px 0;
-}
-.isMobile .menuText {
-  font-size: clamp(22px, 6.5vw, 40px);
-}
-.isMobile .menuText:hover { transform: none; }
-
-/* BOTTOM */
-.isMobile .mainTitle {
-  position: relative;
-  bottom: auto;
-  font-size: clamp(44px, 15vw, 110px);
-  text-shadow: 3px 3px 0 #CC6B24;
-  line-height: 0.9;
-}
-.isMobile .memoryDescription {
-  position: relative;
-  bottom: auto;
-  padding: 0;
-  font-size: clamp(13px, 3.6vw, 20px);
-  text-align: left;
-  line-height: 1.35;
-}
-
-/* Màn hình thấp (điện thoại xoay ngang) */
-@media (max-height: 500px) {
-  .isMobile .screenArea {
+/* =========================================
+   3. CHẾ ĐỘ MOBILE LANDSCAPE 
+   ========================================= */
+@media (max-width: 900px) and (max-height: 500px) {
+  .screenArea {
     padding-top: 12px;
     gap: 8px;
   }
-  .isMobile .titleHowToPlay { font-size: 48px; }
-  .isMobile .mainTitle { font-size: 44px; }
+  .titleHowToPlay { font-size: 48px; }
+  .mainTitle { font-size: 44px; }
 }

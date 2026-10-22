@@ -1,8 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Bahiana&display=swap');
 
-/* Thanh menu nằm ở đầu khung chứa, rộng 100% khung cha nên luôn nằm gọn trong trang */
+/* Thanh menu chính */
 .menuContainer {
-  position: absolute;
+  position: absolute; 
   top: 0;
   left: 0;
   width: 100%;
@@ -10,9 +10,10 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 56px;
+  padding: 0 56px; 
   box-sizing: border-box;
   z-index: 1000;
+  overflow: visible; /* Bảo vệ bóng chữ không bị cắt */
 }
 
 /* Logo bên trái */
@@ -24,6 +25,7 @@
   white-space: nowrap;
   flex-shrink: 0;
   transition: transform 0.2s ease, text-shadow 0.2s ease;
+  padding: 5px; 
 }
 
 .logo:hover {
@@ -34,7 +36,7 @@
 /* Khu vực chứa các nút menu bên phải */
 .navRight {
   display: flex;
-  gap: 47px;
+  gap: 30px; 
   align-items: center;
 }
 
@@ -44,12 +46,14 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding: 10px 5px; 
+  overflow: visible;
 }
 
 .menuText {
   color: #FFFFF6;
   font-family: 'Bahiana', cursive;
-  font-size: 36px;
+  font-size: 32px; 
   font-style: normal;
   font-weight: 400;
   line-height: normal;
@@ -57,6 +61,7 @@
   transition: transform 0.2s ease, color 0.2s ease, text-shadow 0.2s ease;
   text-decoration: none;
   white-space: nowrap;
+  display: block;
 }
 
 .menuText:hover {
@@ -64,7 +69,7 @@
   text-shadow: 0 0 12px currentColor, 0 0 25px currentColor;
 }
 
-/* Khung chứa các mục sổ xuống (mặc định căn giữa dưới item) */
+/* Khung chứa các mục sổ xuống */
 .dropdownMenu {
   position: absolute;
   top: 100%;
@@ -79,10 +84,10 @@
   z-index: 2000;
 }
 
-/* Item sát mép phải: căn dropdown theo mép phải để không bị tràn khỏi trang */
+/* Item sát mép phải để dropdown không tràn ra khỏi web */
 .dropdownMenuRight {
   left: auto;
-  right: 0;
+  right: -20px;
   transform: none;
   align-items: flex-end;
   text-align: right;
@@ -91,16 +96,96 @@
 /* Các mục con sổ xuống */
 .dropdownItem {
   font-family: 'Bahiana', cursive;
-  font-size: 32px;
+  font-size: 30px;
   font-style: normal;
   font-weight: 400;
   line-height: normal;
   text-decoration: none;
   white-space: nowrap;
   transition: transform 0.2s ease, text-shadow 0.2s ease;
+  padding: 5px; 
 }
 
 .dropdownItem:hover {
   transform: scale(1.08);
   text-shadow: 0 0 12px currentColor, 0 0 25px currentColor;
+}
+
+/* =========================================
+   NÚT HAMBURGER & RESPONSIVE
+   ========================================= */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 6px;
+  cursor: pointer;
+  z-index: 2001;
+  padding: 10px;
+}
+
+.hamburger span {
+  width: 32px;
+  height: 4px;
+  background-color: #FFFFF6;
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
+
+.hamburger.open span:nth-child(1) { transform: translateY(10px) rotate(45deg); }
+.hamburger.open span:nth-child(2) { opacity: 0; }
+.hamburger.open span:nth-child(3) { transform: translateY(-10px) rotate(-45deg); }
+
+/* Màn hình dưới 1200px sẽ chuyển sang Hamburger Menu */
+@media (max-width: 1200px) {
+  .hamburger {
+    display: flex;
+  }
+  
+  .navRight {
+    display: none; 
+  }
+
+  .navRight.mobileOpen {
+    display: flex;
+    position: absolute;
+    top: 88px;
+    left: 0;
+    width: 100%;
+    padding: 30px 20px 50px;
+    background: rgba(10, 10, 10, 0.95);
+    backdrop-filter: blur(10px);
+    flex-direction: column;
+    gap: 25px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+    max-height: calc(100vh - 88px);
+    overflow-y: auto;
+    box-sizing: border-box;
+    z-index: 2000;
+  }
+
+  .navItemWrapper {
+    width: 100%;
+    padding: 0;
+  }
+
+  .dropdownMenu {
+    position: relative;
+    top: 0;
+    left: 0;
+    transform: none;
+    padding-top: 10px;
+    gap: 15px;
+    min-width: auto;
+  }
+
+  .dropdownMenuRight {
+    align-items: center;
+    text-align: center;
+    right: 0;
+  }
+}
+
+/* Font chữ cho màn hình Mobile */
+@media (max-width: 900px) {
+  .logo { font-size: 30px; }
 }

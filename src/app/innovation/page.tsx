@@ -64,7 +64,7 @@ const innovationData: Record<string, InnovationItem> = {
       { src: "/image/internship-3.png" }
     ]
   },
-  "other-research": { // Key có gạch ngang khớp với URL
+  "other-research": { 
     title: "OTHER RESEARCH",
     icon: { src: "/image/icon-document.png", w: 130, h: 100, dx: 10, dy: -10 },
     isTwoColumn: true,
@@ -73,13 +73,13 @@ const innovationData: Record<string, InnovationItem> = {
         heading: "Research at Hanoi University of Science and Technology",
         text: "By far the longest-running research paper I've worked on, this one deeply resonates with me because I have always wanted to help people with disabilities get a leg up in life. To that end, I contributed to building our model by collecting visual data and testing it. You can read our research paper on an AI-powered mobile framework for bidirectional sign-language communication ",
         link: { url: "https://drive.google.com/file/d/11ZGfK_rjWkby7JeokKl6MfAPY1-T2XuU/view", text: "here." },
-        image: { src: "/image/other-1.png" } // Cập nhật tên file ảnh tài liệu 1
+        image: { src: "/image/other-1.png" } 
       },
       {
         heading: "Research at 13th Vietnam Summer School of Science",
         text: "Participating in this year's Vietnam Summer School of Science taught me a lot about research methodology and integrity, application of AI in research, and international collaboration in science. Then, I got to implement these lessons in practice through the Science-A-Thon competition. You can see our research paper on a model for improving and strengthening AI's role in self-study and homework completion ",
         link: { url: "https://drive.google.com/file/d/1NvgCjdY811M6dPyfNNCDtWRrdLIA-dJw/view", text: "here." },
-        image: { src: "/image/other-2.png" } // Cập nhật tên file ảnh tài liệu 2
+        image: { src: "/image/other-2.png" } 
       }
     ],
     desc: "",
@@ -88,11 +88,13 @@ const innovationData: Record<string, InnovationItem> = {
 };
 
 type InnovationKey = keyof typeof innovationData;
+const MOBILE_BREAKPOINT = 900;
 
 export default function InnovationPage() {
   const [activeItem, setActiveItem] = useState<InnovationKey | null>(null);
   const [scale, setScale] = useState(1);
   const [navScale, setNavScale] = useState(1);
+  const [isMobile, setIsMobile] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
@@ -105,12 +107,19 @@ export default function InnovationPage() {
     document.body.style.margin = '0';
     document.body.style.padding = '0';
     document.body.style.overflow = 'hidden';
-    document.body.style.backgroundColor = '#000';
+    // Đổi sang 'transparent' để nhìn thấy background mờ (blur)
+    document.body.style.backgroundColor = 'transparent';
 
     const calculateScale = () => {
-      const scaleX = window.innerWidth / 1920;
-      const scaleY = window.innerHeight / 1080;
-      setScale(Math.max(scaleX, scaleY));
+      const w = window.innerWidth;
+      const h = window.innerHeight;
+      setIsMobile(w <= MOBILE_BREAKPOINT);
+
+      const scaleX = w / 1920;
+      const scaleY = h / 1080;
+      
+      // SỬ DỤNG Math.min để tránh bị cắt hình viền ngoài
+      setScale(Math.min(scaleX, scaleY));
       setNavScale(scaleX);
     };
     calculateScale();
@@ -148,112 +157,199 @@ export default function InnovationPage() {
   const current = activeItem ? innovationData[activeItem] : null;
 
   return (
-    <main className={styles.gameContainer}>
+    <main className={`${styles.gameContainer} ${isMobile ? styles.isMobile : ''}`}>
       <div
         className={styles.navLayer}
-        style={{ transform: `scale(${navScale})`, opacity: isMounted ? 1 : 0 }}
+        style={{ transform: isMobile ? 'none' : `scale(${navScale})`, opacity: isMounted ? 1 : 0 }}
       >
         <Nav />
       </div>
 
       <div
         className={styles.scaleWrapper}
-        style={{ transform: `scale(${scale})`, opacity: isMounted ? 1 : 0 }}
+        style={{ transform: isMobile ? 'none' : `scale(${scale})`, opacity: isMounted ? 1 : 0 }}
       >
         <div className={styles.consoleBg}></div>
 
-        {current ? (
-          <div key={activeItem} className={styles.popupBox}>
-            <button
-              type="button"
-              className={styles.closeButton}
-              aria-label="Close"
-              onClick={() => {
-                setActiveItem(null);
-                window.history.pushState(null, '', window.location.pathname);
-              }}
-            >
-              <svg width="42" height="42" viewBox="0 0 42 42" fill="none">
-                <path
-                  d="M3 3L39 39M39 3L3 39"
-                  stroke="#FFFFFF"
-                  strokeWidth="2.5"
-                  strokeLinecap="round"
-                />
-              </svg>
-            </button>
-
-            <div className={styles.titleWrapper}>
-              <h1 className={styles.sportTitle}>{current.title}</h1>
-              {current.icon && (
-                <Image
-                  src={current.icon.src}
-                  alt={`${current.title} icon`}
-                  width={current.icon.w}
-                  height={current.icon.h}
-                  className={styles.sportIcon}
-                  style={{
-                    transform: `translate(${current.icon.dx}px, ${current.icon.dy}px)`,
+        <div className={styles.contentArea}>
+          
+          {/* ----- CHẾ ĐỘ DESKTOP ----- */}
+          {!isMobile && (
+            current ? (
+              <div key={activeItem} className={styles.popupBox}>
+                <button
+                  type="button"
+                  className={styles.closeButton}
+                  aria-label="Close"
+                  onClick={() => {
+                    setActiveItem(null);
+                    window.history.pushState(null, '', window.location.pathname);
                   }}
-                />
-              )}
-            </div>
-
-            {/* Layout dạng 2 cột hiển thị Text và Ảnh */}
-            {current.isTwoColumn && current.columns ? (
-              <div className={styles.twoColumnLayout}>
-                {current.columns.map((col, idx) => (
-                  <div key={idx} className={styles.columnItem}>
-                    {/* Phần nội dung chữ */}
-                    <div className={styles.columnContent}>
-                      <h3 className={styles.columnHeading}>{col.heading}</h3>
-                      <p className={styles.columnText}>
-                        {col.text}
-                        <a href={col.link.url} className={styles.textLink} target="_blank" rel="noopener noreferrer">
-                          {col.link.text}
-                        </a>
-                      </p>
-                    </div>
-                    {/* Phần hình ảnh tài liệu */}
-                    {col.image && (
-                      <div className={styles.columnImageWrapper}>
-                        <Image
-                          src={col.image.src}
-                          alt={col.heading}
-                          fill
-                          style={{ objectFit: 'contain' }}
-                          sizes="300px"
-                        />
+                >
+                  <svg width="42" height="42" viewBox="0 0 42 42" fill="none">
+                    <path
+                      d="M3 3L39 39M39 3L3 39"
+                      stroke="#FFFFFF"
+                      strokeWidth="2.5"
+                      strokeLinecap="round"
+                    />
+                  </svg>
+                </button>
+  
+                <div className={styles.titleWrapper}>
+                  <h1 className={styles.sportTitle}>{current.title}</h1>
+                  {current.icon && (
+                    <Image
+                      src={current.icon.src}
+                      alt={`${current.title} icon`}
+                      width={current.icon.w}
+                      height={current.icon.h}
+                      className={styles.sportIcon}
+                      style={{
+                        transform: `translate(${current.icon.dx}px, ${current.icon.dy}px)`,
+                      }}
+                    />
+                  )}
+                </div>
+  
+                {/* Layout dạng 2 cột hiển thị Text và Ảnh */}
+                {current.isTwoColumn && current.columns ? (
+                  <div className={styles.twoColumnLayout}>
+                    {current.columns.map((col, idx) => (
+                      <div key={idx} className={styles.columnItem}>
+                        {/* Phần nội dung chữ */}
+                        <div className={styles.columnContent}>
+                          <h3 className={styles.columnHeading}>{col.heading}</h3>
+                          <p className={styles.columnText}>
+                            {col.text}
+                            <a href={col.link.url} className={styles.textLink} target="_blank" rel="noopener noreferrer">
+                              {col.link.text}
+                            </a>
+                          </p>
+                        </div>
+                        {/* Phần hình ảnh tài liệu */}
+                        {col.image && (
+                          <div className={styles.columnImageWrapper}>
+                            <Image
+                              src={col.image.src}
+                              alt={col.heading}
+                              fill
+                              style={{ objectFit: 'contain' }}
+                              sizes="300px"
+                            />
+                          </div>
+                        )}
                       </div>
-                    )}
+                    ))}
                   </div>
-                ))}
+                ) : (
+                  <>
+                    <p className={styles.sportDescription}>{current.desc}</p>
+                    <div className={styles.imageGallery}>
+                      {current.images.map((img, index) => (
+                        <div key={`${activeItem}-${index}`} className={styles.imageWrapper}>
+                          <Image
+                            src={img.src}
+                            alt={`${activeItem} photo ${index + 1}`}
+                            width={0}
+                            height={0}
+                            sizes="1000px"
+                            style={{ height: '100%', width: 'auto' }}
+                          />
+                        </div>
+                      ))}
+                    </div>
+                  </>
+                )}
               </div>
             ) : (
-              <>
-                <p className={styles.sportDescription}>{current.desc}</p>
-                <div className={styles.imageGallery}>
-                  {current.images.map((img, index) => (
-                    <div key={`${activeItem}-${index}`} className={styles.imageWrapper}>
-                      <Image
-                        src={img.src}
-                        alt={`${activeItem} photo ${index + 1}`}
-                        width={0}
-                        height={0}
-                        sizes="1000px"
-                        style={{ height: '100%', width: 'auto' }}
-                      />
+              <div key="default" className={styles.captionBox}>
+                <p className={styles.captionText}>{DEFAULT_TEXT}</p>
+              </div>
+            )
+          )}
+
+          {/* ----- CHẾ ĐỘ ĐIỆN THOẠI ----- */}
+          {isMobile && (
+            <div className={styles.mobileScrollContainer}>
+              <div className={styles.captionBox}>
+                <p className={styles.captionText}>{DEFAULT_TEXT}</p>
+              </div>
+
+              {(Object.keys(innovationData) as InnovationKey[]).map((key) => {
+                const item = innovationData[key];
+                return (
+                  <div key={key} id={key} className={styles.popupBox}>
+                    <div className={styles.titleWrapper}>
+                      <h1 className={styles.sportTitle}>{item.title}</h1>
+                      {item.icon && (
+                        <Image
+                          src={item.icon.src}
+                          alt={`${item.title} icon`}
+                          width={item.icon.w}
+                          height={item.icon.h}
+                          className={styles.sportIcon}
+                          style={{
+                            transform: 'none',
+                            width: 'auto',
+                            height: 'clamp(40px, 12vw, 80px)'
+                          }}
+                        />
+                      )}
                     </div>
-                  ))}
-                </div>
-              </>
-            )}
-          </div>
-        ) : (
-          <div key="default" className={styles.captionBox}>
-            <p className={styles.captionText}>{DEFAULT_TEXT}</p>
-          </div>
-        )}
+
+                    {item.isTwoColumn && item.columns ? (
+                      <div className={styles.twoColumnLayout}>
+                        {item.columns.map((col, idx) => (
+                          <div key={idx} className={styles.columnItem}>
+                            <div className={styles.columnContent}>
+                              <h3 className={styles.columnHeading}>{col.heading}</h3>
+                              <p className={styles.columnText}>
+                                {col.text}
+                                <a href={col.link.url} className={styles.textLink} target="_blank" rel="noopener noreferrer">
+                                  {col.link.text}
+                                </a>
+                              </p>
+                            </div>
+                            {col.image && (
+                              <div className={styles.columnImageWrapper}>
+                                <Image
+                                  src={col.image.src}
+                                  alt={col.heading}
+                                  fill
+                                  style={{ objectFit: 'contain' }}
+                                  sizes="(max-width: 900px) 250px, 300px"
+                                />
+                              </div>
+                            )}
+                          </div>
+                        ))}
+                      </div>
+                    ) : (
+                      <>
+                        <p className={styles.sportDescription}>{item.desc}</p>
+                        <div className={styles.imageGallery}>
+                          {item.images.map((img, idx) => (
+                            <div key={`${key}-img-${idx}`} className={styles.imageWrapper}>
+                              <Image
+                                src={img.src}
+                                alt={`${item.title} photo ${idx + 1}`}
+                                width={400}
+                                height={300}
+                                style={{ width: '100%', height: 'auto', objectFit: 'cover' }}
+                              />
+                            </div>
+                          ))}
+                        </div>
+                      </>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          )}
+
+        </div>
       </div>
     </main>
   );

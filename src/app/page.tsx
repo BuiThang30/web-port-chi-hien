@@ -5,7 +5,6 @@ import Image from 'next/image';
 import Link from 'next/link';
 import styles from './page.module.css';
 
-// Mỗi danh mục = 1 trang (/categoryPath), mỗi subitem trỏ tới popup có id tương ứng (#id)
 const memoryData = {
   ROBOTICS: {
     title: "ROBOTICS",
@@ -65,7 +64,6 @@ const memoryData = {
 
 type CategoryKey = keyof typeof memoryData;
 
-// Dưới ngưỡng này dùng layout fluid (điện thoại / tablet dọc), trên ngưỡng dùng khung 1920x1080 co giãn
 const MOBILE_BREAKPOINT = 900;
 
 export default function Home() {
@@ -77,14 +75,14 @@ export default function Home() {
 
   const memoryPanelRef = useRef<HTMLDivElement | null>(null);
 
-  // Tính scale + nhận diện mobile
   useEffect(() => {
     const calculate = () => {
       const w = window.innerWidth;
       const h = window.innerHeight;
       setIsMobile(w < MOBILE_BREAKPOINT);
-      // ĐÃ SỬA: Đổi từ Math.min thành Math.max để fill full màn hình
-      setScale(Math.max(w / 1920, h / 1080)); 
+      
+      // SỬA Ở ĐÂY: Dùng Math.min để toàn bộ khung máy game luôn nằm trọn trong màn hình (không bị cắt)
+      setScale(Math.min(w / 1920, h / 1080)); 
     };
 
     calculate();
@@ -99,15 +97,13 @@ export default function Home() {
     };
   }, []);
 
-  // Khoá scroll body (chỉ khi dùng khung cố định)
   useEffect(() => {
     document.body.style.margin = '0';
     document.body.style.padding = '0';
-    document.body.style.backgroundColor = '#000';
+    document.body.style.backgroundColor = 'transparent'; 
     document.body.style.overflow = 'hidden';
   }, []);
 
-  // Bấm ra ngoài bảng Memory => tắt hover/active
   useEffect(() => {
     if (currentScreen !== 'MEMORY') return;
 
@@ -179,7 +175,6 @@ export default function Home() {
 
             {currentScreen === 'MEMORY' && (
               <div className={styles.memoryPanel} ref={memoryPanelRef}>
-                {/* Cột trái: Hiện tại là Link chuyển thẳng tới trang lớn */}
                 <div className={styles.memoryLeftCol}>
                   {(Object.keys(memoryData) as CategoryKey[]).map((key) => (
                     <Link
@@ -188,7 +183,6 @@ export default function Home() {
                       className={`${styles.categoryItem} ${activeCategory === key ? styles.categoryActive : ''}`}
                       onMouseEnter={() => setActiveCategory(key)}
                       onClick={(e) => {
-                        // Trên mobile: chạm lần 1 để mở menu phụ, chạm lần 2 (khi đã active) mới nhảy trang
                         if (isMobile && activeCategory !== key) {
                           e.preventDefault();
                           setActiveCategory(key);
@@ -202,7 +196,6 @@ export default function Home() {
                   ))}
                 </div>
 
-                {/* Cột phải: trỏ tới /danh-muc#id-popup */}
                 <div className={styles.memoryRightCol}>
                   {activeCategory &&
                     memoryData[activeCategory].items.map((sub) => (
