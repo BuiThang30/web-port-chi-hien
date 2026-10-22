@@ -1,0 +1,106 @@
+@import url('https://fonts.googleapis.com/css2?family=Bahiana&display=swap');
+
+/* Thanh menu nằm ở đầu khung chứa, rộng 100% khung cha nên luôn nằm gọn trong trang */
+.menuContainer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 88px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 56px;
+  box-sizing: border-box;
+  z-index: 1000;
+}
+
+/* Logo bên trái */
+.logo {
+  color: #FFFFF6;
+  font-family: 'Bahiana', cursive;
+  font-size: 38px;
+  text-decoration: none;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: transform 0.2s ease, text-shadow 0.2s ease;
+}
+
+.logo:hover {
+  transform: scale(1.05);
+  text-shadow: 0 0 15px #FFFFF6, 0 0 25px #FFFFF6;
+}
+
+/* Khu vực chứa các nút menu bên phải */
+.navRight {
+  display: flex;
+  gap: 47px;
+  align-items: center;
+}
+
+/* Item lớn trên thanh Nav */
+.navItemWrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.menuText {
+  color: #FFFFF6;
+  font-family: 'Bahiana', cursive;
+  font-size: 36px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  cursor: pointer;
+  transition: transform 0.2s ease, color 0.2s ease, text-shadow 0.2s ease;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.menuText:hover {
+  transform: scale(1.1);
+  text-shadow: 0 0 12px currentColor, 0 0 25px currentColor;
+}
+
+/* Khung chứa các mục sổ xuống (mặc định căn giữa dưới item) */
+.dropdownMenu {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding-top: 15px;
+  min-width: 280px;
+  z-index: 2000;
+}
+
+/* Item sát mép phải: căn dropdown theo mép phải để không bị tràn khỏi trang */
+.dropdownMenuRight {
+  left: auto;
+  right: 0;
+  transform: none;
+  align-items: flex-end;
+  text-align: right;
+}
+
+/* Các mục con sổ xuống */
+.dropdownItem {
+  font-family: 'Bahiana', cursive;
+  font-size: 32px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: transform 0.2s ease, text-shadow 0.2s ease;
+}
+
+.dropdownItem:hover {
+  transform: scale(1.08);
+  text-shadow: 0 0 12px currentColor, 0 0 25px currentColor;
+}

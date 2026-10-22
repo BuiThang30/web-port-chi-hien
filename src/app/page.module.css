@@ -1,150 +1,410 @@
-.page {
-  --background: #fafafa;
-  --foreground: #fff;
+@import url('https://fonts.googleapis.com/css2?family=ABeeZee&family=Bahiana&family=Be+Vietnam+Pro:wght@400&display=swap');
 
-  --text-primary: #000;
-  --text-secondary: #666;
-
-  --button-primary-hover: #383838;
-  --button-secondary-hover: #f2f2f2;
-  --button-secondary-border: #ebebeb;
-
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-family: var(--font-geist-sans);
-  background-color: var(--background);
-}
-
-.main {
-  display: flex;
-  flex: 1;
-  width: 100%;
-  max-width: 800px;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: space-between;
-  background-color: var(--foreground);
-  padding: 120px 60px;
-}
-
-.intro {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  text-align: left;
-  gap: 24px;
-}
-
-.intro h1 {
-  max-width: 320px;
-  font-size: 40px;
-  font-weight: 600;
-  line-height: 48px;
-  letter-spacing: -2.4px;
-  text-wrap: balance;
-  color: var(--text-primary);
-}
-
-.intro p {
-  max-width: 440px;
-  font-size: 18px;
-  line-height: 32px;
-  text-wrap: balance;
-  color: var(--text-secondary);
-}
-
-.intro a {
-  font-weight: 500;
-  color: var(--text-primary);
-}
-
-.ctas {
-  display: flex;
-  flex-direction: row;
-  width: 100%;
-  max-width: 440px;
-  gap: 16px;
-  font-size: 14px;
-}
-
-.ctas a {
+/* =========================================
+   CHẾ ĐỘ DESKTOP / TABLET NGANG / 2K / 4K
+   Khung thiết kế 1920x1080, JS tính scale cho vừa mọi màn hình
+   ========================================= */
+.gameContainer {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 40px;
-  padding: 0 16px;
-  border-radius: 128px;
-  border: 1px solid transparent;
-  transition: 0.2s;
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  background-color: #000;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+.scaleWrapper {
+  width: 1920px;
+  height: 1080px;
+  flex-shrink: 0;
+  transform-origin: center center;
+  transition: opacity 0.3s ease;
+  position: relative;
+}
+
+.consoleBg {
+  width: 100%;
+  height: 100%;
+  background-image: url('/image/background-home.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.screenArea {
+  position: absolute;
+  width: 1312px;
+  height: 800px;
+  top: 13%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* ---------- PHẦN 1: NỘI DUNG TOP ---------- */
+.topContent {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+}
+
+/* --- HOME --- */
+.titleHowToPlay {
+  color: #5284F7;
+  font-family: 'Bahiana', cursive;
+  font-size: 122.182px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  text-align: center;
+  margin: 30px 0 0 0;
+}
+
+.instructionText {
+  color: #548AF7;
+  text-align: center;
+  -webkit-text-stroke-width: 0.1px;
+  -webkit-text-stroke-color: #000;
+  font-family: "Be Vietnam Pro", sans-serif;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  margin: 10px 0;
+}
+
+/* --- ABOUT ME --- */
+.aboutContent {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  padding: 0 50px;
+  margin-top: 30px;
+}
+.aboutImageContainer {
+  width: 280px;
+  height: 380px;
+  border: 6px solid white;
+  background-color: #fff;
+  box-shadow: 2px 2px 10px rgba(0,0,0,0.3);
+  flex-shrink: 0;
+}
+.aboutImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.aboutTextBox {
+  color: #031D57;
+  text-align: justify;
+  font-family: "Be Vietnam Pro", sans-serif;
+  font-size: 22px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.4;
+  background-color: rgba(255, 255, 255, 0.75);
+  border-radius: 12px;
+  padding: 25px 30px;
+  height: fit-content;
+}
+
+/* --- SELECT THE MEMORY --- */
+.memoryPanel {
+  background-color: rgba(255, 255, 255, 0.7);
+  border-radius: 12px;
+  width: 90%;
+  height: 444px;
+  margin: 20px auto 0;
+  display: flex;
+  padding: 30px 40px;
+  box-sizing: border-box;
+  box-shadow: 2px 2px 10px rgba(0,0,0,0.1);
+}
+.memoryLeftCol {
+  flex: 1;
+  border-right: 3px solid #5284F7;
+  display: flex;
+  flex-direction: column;
+  padding-right: 20px;
+  gap: 15px;
+}
+
+.categoryItem {
+  color: #5285F7;
+  font-family: 'Bahiana', cursive;
+  font-size: 64px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1;
   cursor: pointer;
-  width: fit-content;
-  font-weight: 500;
+  margin: 0;
+  transition: transform 0.2s;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  text-decoration: none; /* Bỏ gạch chân mặc định của thẻ Link */
+  display: block; /* Đảm bảo nút bấm phủ đầy bề ngang text */
 }
 
-a.primary {
-  background: var(--text-primary);
-  color: var(--background);
-  gap: 8px;
+.categoryItem:hover { 
+  transform: translateX(10px); 
 }
 
-a.secondary {
-  border-color: var(--button-secondary-border);
+.categoryActive {
+  text-decoration: underline;
+  text-underline-offset: 6px;
 }
 
-/* Enable hover only on non-touch devices */
-@media (hover: hover) and (pointer: fine) {
-  a.primary:hover {
-    background: var(--button-primary-hover);
-    border-color: transparent;
-  }
+.memoryRightCol {
+  flex: 1.2;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: flex-end;
+  padding-left: 30px;
+  gap: 15px;
+  overflow: hidden;
+}
+.subItem {
+  color: #5285F7;
+  text-align: right;
+  text-decoration: none;
+  font-family: 'Bahiana', cursive;
+  font-size: 40px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1;
+  cursor: pointer;
+  margin: 0;
+  transition: color 0.2s;
+  animation: fadeInUp 0.25s ease both;
+}
+.subItem:hover { color: #CC6B24; }
 
-  a.secondary:hover {
-    background: var(--button-secondary-hover);
-    border-color: transparent;
-  }
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
-@media (max-width: 600px) {
-  .main {
-    padding: 48px 24px;
-  }
+/* ---------- PHẦN 2: MENU VÀ TEXT ĐÁY ---------- */
+.menuContainer {
+  position: absolute;
+  bottom: 250px;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 100px;
+  z-index: 20;
+}
+.menuText {
+  color: #FFFFF6;
+  font-family: 'Bahiana', cursive;
+  font-size: 48px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+.menuText:hover { transform: scale(1.1); }
+.menuActive { color: #FCFFC6 !important; }
 
-  .intro {
-    gap: 16px;
-  }
-
-  .intro h1 {
-    font-size: 32px;
-    line-height: 40px;
-    letter-spacing: -1.92px;
-  }
+.mainTitle {
+  position: absolute;
+  bottom: 15px;
+  left: 0;
+  width: 100%;
+  color: #FCFFC6;
+  text-shadow: 4px 4px 0 #CC6B24;
+  font-family: 'Bahiana', cursive;
+  font-size: 181.481px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 0.8;
+  text-align: center;
+  margin: 0;
 }
 
-@media (prefers-color-scheme: dark) {
-  .logo {
-    filter: invert();
-  }
-
-  .page {
-    --background: #000;
-    --foreground: #000;
-
-    --text-primary: #ededed;
-    --text-secondary: #999;
-
-    --button-primary-hover: #ccc;
-    --button-secondary-hover: #1a1a1a;
-    --button-secondary-border: #1a1a1a;
-  }
+.memoryDescription {
+  position: absolute;
+  bottom: 25px;
+  left: 0;
+  width: 100%;
+  color: #FFFFFA;
+  text-align: justify;
+  font-family: 'ABeeZee', sans-serif;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  padding: 0 50px;
+  margin: 0;
+  box-sizing: border-box;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
 }
 
-.code {
-  font-family: var(--font-geist-mono);
-  font-size: 0.9em;
-  background: color-mix(in srgb, currentColor 8%, transparent);
-  padding: 0.1em 0.4em;
-  border-radius: 6px;
+/* =========================================
+   CHẾ ĐỘ MOBILE / TABLET DỌC (< 900px)
+   Không scale nữa, dùng layout fluid theo viewport
+   ========================================= */
+.isMobile.gameContainer {
+  display: block;
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100dvh;
+  overflow-x: hidden;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.isMobile .scaleWrapper {
+  width: 100%;
+  height: auto;
+  min-height: 100dvh;
+  transform: none !important;
+}
+
+.isMobile .consoleBg {
+  position: fixed;
+  background-position: center top;
+}
+
+.isMobile .screenArea {
+  position: relative;
+  top: 0;
+  left: 0;
+  transform: none;
+  width: 100%;
+  height: auto;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  padding: clamp(24px, 9vh, 80px) 5vw clamp(16px, 4vh, 40px);
+  box-sizing: border-box;
+  gap: 16px;
+}
+
+.isMobile .topContent {
+  position: relative;
+  flex: 1 1 auto;
+  width: 100%;
+}
+
+/* HOME */
+.isMobile .titleHowToPlay {
+  font-size: clamp(48px, 17vw, 110px);
+  margin: 0;
+  line-height: 1;
+}
+.isMobile .instructionText {
+  font-size: clamp(14px, 3.8vw, 22px);
+  margin: 8px 0;
+}
+
+/* ABOUT */
+.isMobile .aboutContent {
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  padding: 0;
+  margin-top: 8px;
+}
+.isMobile .aboutImageContainer {
+  width: clamp(160px, 50vw, 280px);
+  height: auto;
+  aspect-ratio: 7 / 9.5;
+  border-width: 4px;
+}
+.isMobile .aboutTextBox {
+  font-size: clamp(14px, 3.8vw, 20px);
+  padding: 16px 18px;
+  text-align: left;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* MEMORY */
+.isMobile .memoryPanel {
+  width: 100%;
+  height: auto;
+  min-height: 0;
+  flex-direction: column;
+  padding: 18px 20px;
+  margin: 8px 0 0;
+  gap: 12px;
+}
+.isMobile .memoryLeftCol {
+  border-right: none;
+  border-bottom: 3px solid #5284F7;
+  padding-right: 0;
+  padding-bottom: 14px;
+  gap: 10px;
+}
+.isMobile .categoryItem {
+  font-size: clamp(28px, 8.5vw, 52px);
+}
+.isMobile .categoryItem:hover { transform: none; }
+
+.isMobile .memoryRightCol {
+  padding-left: 0;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 10px;
+  overflow: visible;
+  min-height: 24px;
+}
+.isMobile .subItem {
+  text-align: left;
+  font-size: clamp(20px, 6vw, 34px);
+  line-height: 1.1;
+}
+
+/* MENU */
+.isMobile .menuContainer {
+  position: relative;
+  bottom: auto;
+  flex-wrap: wrap;
+  gap: 8px 22px;
+  padding: 4px 0;
+}
+.isMobile .menuText {
+  font-size: clamp(22px, 6.5vw, 40px);
+}
+.isMobile .menuText:hover { transform: none; }
+
+/* BOTTOM */
+.isMobile .mainTitle {
+  position: relative;
+  bottom: auto;
+  font-size: clamp(44px, 15vw, 110px);
+  text-shadow: 3px 3px 0 #CC6B24;
+  line-height: 0.9;
+}
+.isMobile .memoryDescription {
+  position: relative;
+  bottom: auto;
+  padding: 0;
+  font-size: clamp(13px, 3.6vw, 20px);
+  text-align: left;
+  line-height: 1.35;
+}
+
+/* Màn hình thấp (điện thoại xoay ngang) */
+@media (max-height: 500px) {
+  .isMobile .screenArea {
+    padding-top: 12px;
+    gap: 8px;
+  }
+  .isMobile .titleHowToPlay { font-size: 48px; }
+  .isMobile .mainTitle { font-size: 44px; }
 }

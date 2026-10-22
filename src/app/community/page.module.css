@@ -1,0 +1,198 @@
+@import url('https://fonts.googleapis.com/css2?family=Bahiana&family=Be+Vietnam+Pro:wght@300;400;500;700&display=swap');
+
+/* Container full màn hình */
+.gameContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+  background-color: #000;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+.scaleWrapper {
+  width: 1920px;
+  height: 1080px;
+  flex-shrink: 0;
+  transform-origin: center center;
+  transition: opacity 0.3s ease;
+  position: relative;
+}
+
+.navLayer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 1920px;
+  height: 88px;
+  transform-origin: top left;
+  transition: opacity 0.3s ease;
+  z-index: 1000;
+}
+
+/* Đổi thành background community */
+.consoleBg {
+  width: 100%;
+  height: 100%;
+  background-image: url('/image/background-community.png'); /* File ảnh nền cộng đồng */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ===== Popup Box (Cùng kích thước nhưng đổi màu nền kính mờ) ===== */
+.popupBox {
+  position: absolute;
+  left: 106px;
+  top: 148px;
+  width: 1708px;
+  height: 858px;
+  box-sizing: border-box;
+  padding: 34px 70px 47px 44px;
+  border-radius: 15px;
+  border: 2px solid #FFF;
+  background: rgba(30, 45, 100, 0.55); /* Chỉnh lại màu kính mờ cho hợp tone nền xanh đậm */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(12px);
+  display: flex;
+  flex-direction: column;
+  z-index: 100;
+  overflow: visible; 
+  animation: fadeIn 0.25s ease;
+}
+
+.titleWrapper {
+  display: flex;
+  align-items: flex-end;
+  gap: 15px;
+  height: 140px; 
+  margin-bottom: 12px;
+  flex-shrink: 0;
+}
+
+.sportTitle {
+  color: #FFD700; /* Màu vàng giống thiết kế Community */
+  font-family: 'Bahiana', cursive;
+  font-size: 110px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1;
+  margin: 0;
+  text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.4);
+}
+
+.sportIcon {
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.sportDescription {
+  height: 120px;
+  margin: 0 0 20px 0;
+  flex-shrink: 0;
+  color: #FFFFFA;
+  text-align: justify;
+  font-family: "Be Vietnam Pro", sans-serif;
+  font-size: 22px;
+  font-style: normal;
+  font-weight: 300;
+  line-height: 1.6;
+}
+
+/* Hàng ảnh */
+.imageGallery {
+  display: flex;
+  gap: 22px;
+  align-items: flex-start;
+  justify-content: center;
+  height: 516px;
+  flex-shrink: 0;
+}
+
+.imageWrapper {
+  position: relative;
+  height: 516px;
+  box-sizing: border-box;
+  border-radius: 28px;
+  overflow: hidden;
+  border: 2px solid rgba(255, 255, 255, 0.85);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
+  transition: transform 0.3s ease;
+}
+
+.imageWrapper img {
+  height: 100%;
+  width: auto;
+  display: block;
+}
+
+.imageWrapper:hover {
+  transform: scale(1.01);
+}
+
+/* Nút Close */
+.closeButton {
+  position: absolute;
+  top: 15px;
+  right: 17px;
+  width: 88px;
+  height: 88px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+  z-index: 10;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  outline: none;
+  padding: 0;
+}
+
+.closeButton:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: scale(1.05);
+}
+
+/* ===== Trạng thái mặc định (Khung nổi text phía dưới) ===== */
+.captionBox {
+  position: absolute;
+  left: 380px; 
+  top: 810px;
+  width: 1000px; /* Độ dài vừa phải, căn giữa theo bản thiết kế */
+  height: auto;
+  box-sizing: border-box;
+  padding: 20px 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  border: 2px solid rgba(255, 255, 255, 0.8);
+  background: rgba(85, 130, 200, 0.45);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(8px);
+  z-index: 100;
+  animation: fadeIn 0.25s ease;
+}
+
+.captionText {
+  margin: 0;
+  color: #FFFFFA;
+  text-align: justify;
+  font-family: "Be Vietnam Pro", sans-serif;
+  font-size: 20px;
+  font-weight: 300;
+  line-height: 28px;
+}

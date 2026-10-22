@@ -1,0 +1,217 @@
+@import url('https://fonts.googleapis.com/css2?family=Bahiana&family=Be+Vietnam+Pro:wght@300;400;500;700&display=swap');
+
+/* Container full màn hình */
+.gameContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+  background-color: #000;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+.scaleWrapper {
+  width: 1920px;
+  height: 1080px;
+  flex-shrink: 0;
+  transform-origin: center center;
+  transition: opacity 0.3s ease;
+  position: relative;
+}
+
+.navLayer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 1920px;
+  height: 88px;
+  transform-origin: top left;
+  transition: opacity 0.3s ease;
+  z-index: 1000;
+}
+
+/* Background trang Other */
+.consoleBg {
+  width: 100%;
+  height: 100%;
+  background-image: url('/image/background-other.png'); 
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ===== Popup Box Kính mờ ===== */
+.popupBox {
+  position: absolute;
+  left: 106px;
+  top: 148px;
+  width: 1708px;
+  height: 858px;
+  box-sizing: border-box;
+  padding: 34px 70px 47px 44px;
+  border-radius: 15px;
+  border: 2px solid #FFF;
+  background: rgba(144, 203, 249, 0.45);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(12px);
+  display: flex;
+  flex-direction: column;
+  z-index: 100;
+  overflow: hidden; 
+  animation: fadeIn 0.25s ease;
+}
+
+.sportTitle {
+  color: #FFD700;
+  font-family: 'Bahiana', cursive;
+  font-size: 110px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1;
+  margin: 0;
+  text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.4);
+}
+
+.closeButton {
+  position: absolute;
+  top: 15px;
+  right: 17px;
+  width: 88px;
+  height: 88px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+  z-index: 100;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  outline: none;
+  padding: 0;
+}
+
+.closeButton:hover {
+  background: rgba(255, 255, 255, 0.45);
+  transform: scale(1.05);
+}
+
+/* ========================================================
+   BỐ CỤC ACHIEVEMENTS (Slide Hình ngang dọc lẫn lộn)
+   ======================================================== */
+.achievementsLayout {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 100%;
+  gap: 20px;
+}
+
+.titleColumn {
+  width: 400px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  margin-top: 10px;
+}
+
+.sliderColumn {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 12px; 
+  overflow: hidden; 
+  justify-content: center;
+}
+
+.sliderWrapper {
+  width: 100%;
+  height: 175px; 
+  overflow: hidden;
+  position: relative;
+}
+
+.sliderRow {
+  display: flex;
+  gap: 12px;
+  width: max-content; /* Tự động kéo dài tuỳ theo số lượng ảnh ngang dọc của toàn bộ hàng */
+  height: 100%;
+}
+
+/* KHÔNG FIX CỨNG WIDTH - Chỉ khoá Height */
+.certImageWrapper {
+  position: relative;
+  height: 175px; 
+  background-color: #FFF; 
+  flex-shrink: 0;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  border-radius: 4px;
+  overflow: hidden;
+  display: flex; 
+  align-items: center;
+  justify-content: center;
+}
+
+/* Hình ảnh thả width: auto để nó tự điều chỉnh tỷ lệ */
+.certImg {
+  width: auto;
+  height: 100%;
+  display: block;
+}
+
+/* === CSS KEYFRAMES CHO ANIMATION TRƯỢT === */
+
+@keyframes slideLeft {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+@keyframes slideRight {
+  0% { transform: translateX(-50%); }
+  100% { transform: translateX(0); }
+}
+
+/* Cài đặt thời gian chạy slide (25 giây 1 vòng, có thể tăng/giảm nếu muốn chạy nhanh/chậm) */
+.slideLeft {
+  animation: slideLeft 30s linear infinite;
+}
+.slideRight {
+  animation: slideRight 30s linear infinite;
+}
+
+/* Dừng animation khi hover vào hàng để xem kỹ ảnh */
+.sliderRow:hover {
+  animation-play-state: paused;
+}
+
+
+/* ========================================================
+   BỐ CỤC PLACEHOLDER (CHO HOBBIES)
+   ======================================================== */
+.placeholderLayout {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+}
+
+.placeholderText {
+  margin-top: 30px;
+  color: #FFFFFA;
+  font-family: "Be Vietnam Pro", sans-serif;
+  font-size: 26px;
+  font-weight: 400;
+  line-height: 1.6;
+}
