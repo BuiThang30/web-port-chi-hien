@@ -28,11 +28,13 @@ const NAV_ITEMS: NavItem[] = [
   {
     name: 'INNOVATION AND RESEARCH',
     path: '/innovation',
-    color: '#244863',
+    color: '#D3A7CE', 
     items: [
       { name: 'TEKMONK', id: 'tekmonk' },
       { name: 'VSIC', id: 'vsic' },
       { name: 'WICO', id: 'wico' },
+      { name: 'INTERNSHIP', id: 'internship' },
+      { name: 'VIETNAM SUMMER SCHOOL OF SCIENCE', id: 'vietnam-summer-school-of-science' }, /* <-- ĐÃ THÊM MỚI VÀO ĐÂY */
       { name: 'OTHER RESEARCH', id: 'other-research' }
     ]
   },
@@ -78,25 +80,22 @@ export default function Nav() {
   const [navStyle, setNavStyle] = useState<React.CSSProperties>({});
   const pathname = usePathname();
 
-  // Thuật toán tự động đo đạc khoảng trống và căn giữa Menu dựa trên background
   useEffect(() => {
     const calculateOffset = () => {
       const w = window.innerWidth;
       const h = window.innerHeight;
       
-      // Chế độ Mobile (dưới 900px theo thiết lập trong page)
       if (w <= 900) {
         setNavStyle({
           paddingLeft: '20px',
           paddingRight: '20px',
           top: '0px',
-          position: 'relative' // Ép relative để đẩy nội dung mobile xuống mượt mà
+          position: 'relative' 
         });
         if (mobileOpen && w > 1200) setMobileOpen(false);
         return;
       }
 
-      // Tính toán bù trừ trên Desktop để đồng bộ với thẻ chứa Math.min
       const scaleX = w / 1920;
       const scaleY = h / 1080;
       const scale = Math.min(scaleX, scaleY);
@@ -104,16 +103,14 @@ export default function Nav() {
       const gameWidth = 1920 * scale;
       const gameHeight = 1080 * scale;
       
-      // Đo khoảng đen thừa ra của khung game gốc
       const emptyLeftReal = Math.max(0, (w - gameWidth) / 2);
       const emptyTopReal = Math.max(0, (h - gameHeight) / 2);
       
-      // Quy đổi ngược về đơn vị CSS của thẻ Nav
       const offsetLeftCSS = emptyLeftReal / scaleX;
       const offsetTopCSS = emptyTopReal / scaleX;
       
       setNavStyle({
-        paddingLeft: `${56 + offsetLeftCSS}px`, // 56px là padding gốc + phần bù
+        paddingLeft: `${56 + offsetLeftCSS}px`, 
         paddingRight: `${56 + offsetLeftCSS}px`,
         top: `${offsetTopCSS}px`,
         position: 'absolute'
@@ -132,7 +129,6 @@ export default function Nav() {
           CHI HIEN&apos;S FOLIO
         </Link>
 
-        {/* Nút Hamburger */}
         <div 
           className={`${styles.hamburger} ${mobileOpen ? styles.open : ''}`} 
           onClick={() => setMobileOpen(!mobileOpen)}
@@ -142,7 +138,6 @@ export default function Nav() {
           <span></span>
         </div>
 
-        {/* Danh sách Menu bên phải */}
         <div className={`${styles.navRight} ${mobileOpen ? styles.mobileOpen : ''}`}>
           {NAV_ITEMS.map((item, index) => {
             const isHovered = hoveredItem === item.name;
@@ -197,7 +192,6 @@ export default function Nav() {
         </div>
       </nav>
 
-      {/* Lớp Overlay để bấm ra ngoài tự tắt Hamburger */}
       {mobileOpen && (
         <div 
           style={{ position: 'fixed', top: '88px', left: 0, right: 0, bottom: 0, zIndex: 999 }}

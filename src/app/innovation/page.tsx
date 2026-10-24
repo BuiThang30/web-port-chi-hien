@@ -5,31 +5,31 @@ import Image from 'next/image';
 import Nav from '@/components/nav/nav';
 import styles from './page.module.css';
 
-// 1. Định nghĩa Type cho dữ liệu
 type InnovationItem = {
   title: string;
   icon: { src: string; w: number; h: number; dx: number; dy: number } | null;
+  subtitle?: string; 
   desc: string;
+  link?: { url: string; text: string }; 
   images: { src: string }[];
   isTwoColumn?: boolean;
   columns?: {
     heading: string;
-    text: string;
-    link: { url: string; text: string };
-    image: { src: string }; // Thuộc tính ảnh tài liệu
+    textBeforeLink?: string; // Text đứng trước Link
+    link?: { url: string; text: string };
+    textAfterLink?: string; // Text đứng sau Link
+    image: { src: string }; 
   }[];
 };
 
-// Nội dung trạng thái mặc định (không có popup)
 const DEFAULT_TEXT =
   "Innovation and Research: Before I even knew what engineering meant, I had long adored learning about the many scientific phenomena that surround us every day. So it comes as no surprise that I quickly took a liking to researching and developing devices and tools to solve problems, whether major or minor.";
 
-// 2. Dữ liệu cho các mục
 const innovationData: Record<string, InnovationItem> = {
   tekmonk: {
     title: "TEKMONK",
     icon: { src: "/image/icon-laptop.png", w: 140, h: 100, dx: 0, dy: -10 },
-    desc: "This programming research competition was the first, and longest-running, contest I've ever participated in. Since it was the first time my friends and I had tried programming a website, we ran into many issues getting it to look just right. Thankfully, we made it all the way to the National Round and won the Promising Award with a LinkedIn and Google Maps crossover project.",
+    desc: "Tekmonk was my first major programming competition and one of my longest-running projects. With no prior experience in web development, my friends and I learned through constant trial and error while building a platform combining features of LinkedIn and Google Maps. Our persistence took us to the National Round, where we received the Promising Award.",
     images: [
       { src: "/image/tekmonk-1.png" },
       { src: "/image/tekmonk-2.png" }
@@ -38,7 +38,7 @@ const innovationData: Record<string, InnovationItem> = {
   vsic: {
     title: "VSIC",
     icon: { src: "/image/icon-robot.png", w: 130, h: 110, dx: 10, dy: 5 },
-    desc: "This competition was the first official research competition that I ever participated in. In all sincerity, it was also a humbling experience, as we received only the Consolation Prize out of 28 teams in the division. Despite that, I still felt proud of our air-monitoring robot and grateful for all the judges' feedback, which showed me exactly where our work could improve and motivated me to aim higher in the next competition.",
+    desc: "VSIC was my first official research competition and a humbling but valuable experience. Our air-monitoring robot earned a Consolation Prize, while the judges’ feedback helped me recognize where our work could improve. More importantly, the experience motivated me to refine my approach and aim higher in future research competitions.",
     images: [
       { src: "/image/vsic-1.png" },
       { src: "/image/vsic-2.png" }
@@ -47,7 +47,7 @@ const innovationData: Record<string, InnovationItem> = {
   wico: {
     title: "WICO",
     icon: { src: "/image/icon-tower.png", w: 70, h: 220, dx: 0, dy: 30 },
-    desc: "WICO 2026 is by far the biggest research competition I've taken part in, with more than 1,000 participants from 26 countries. Standing among so many talented young researchers from around the world was both intimidating and inspiring. I was immensely proud to lead my team to a gold medal with our water-testing device, which showed me that careful testing, teamwork, and persistence can pay off even against strong international competition.",
+    desc: "WICO 2026 was my biggest research competition yet, bringing together over 1,000 participants from 26 countries. Competing alongside talented young researchers from around the world was both challenging and inspiring. I was proud to lead my team to a Gold Medal with our water-testing device, proving how far persistence, teamwork, and careful experimentation could take us.",
     images: [
       { src: "/image/wico-1.png" },
       { src: "/image/wico-2.png" },
@@ -64,21 +64,35 @@ const innovationData: Record<string, InnovationItem> = {
       { src: "/image/internship-3.png" }
     ]
   },
-  "other-research": { 
+  "vietnam-summer-school-of-science": {
+    title: "VIETNAM SUMMER SCHOOL OF SCIENCE",
+    icon: null,
+    subtitle: "Research at 13th Vietnam Summer School of Science",
+    desc: "Participating in this year’s Vietnam Summer School of Science taught me a lot about research methodology and integrity, application of AI in research, and international collaboration in science. Then, I got to implement these lessons in practice through the Science-A-Thon competition. You can see our research paper on a model for improving and strengthening AI’s role in self-study and homework completion.",
+    link: { url: "https://drive.google.com/file/d/1caq5vznxZQIfN5qfvnlizZrQMSLp4s8N/view", text: "Here" },
+    images: [
+      { src: "/image/vsss-1.png" },
+      { src: "/image/vsss-2.png" },
+      { src: "/image/vsss-3.png" }
+    ]
+  },
+"other-research": { 
     title: "OTHER RESEARCH",
     icon: { src: "/image/icon-document.png", w: 130, h: 100, dx: 10, dy: -10 },
     isTwoColumn: true,
     columns: [
       {
-        heading: "Research at Hanoi University of Science and Technology",
-        text: "By far the longest-running research paper I've worked on, this one deeply resonates with me because I have always wanted to help people with disabilities get a leg up in life. To that end, I contributed to building our model by collecting visual data and testing it. You can read our research paper on an AI-powered mobile framework for bidirectional sign-language communication ",
-        link: { url: "https://drive.google.com/file/d/11ZGfK_rjWkby7JeokKl6MfAPY1-T2XuU/view", text: "here." },
+        heading: "Sign Language Communication Research at Hanoi University of Science and Technology",
+        textBeforeLink: "This long-term research project is especially meaningful to me because of my desire to make technology more accessible to people with disabilities. I contributed to developing and testing our AI model by collecting visual data and evaluating its performance. Our work resulted in a ",
+        link: { url: "https://drive.google.com/file/d/11ZGfK_rjWkby7JeokKl6MfAPY1-T2XuU/view", text: "research paper" },
+        textAfterLink: " on an AI-powered mobile framework for bidirectional sign-language communication, turning my interest in engineering into research with real social impact.",
         image: { src: "/image/other-1.png" } 
       },
       {
-        heading: "Research at 13th Vietnam Summer School of Science",
-        text: "Participating in this year's Vietnam Summer School of Science taught me a lot about research methodology and integrity, application of AI in research, and international collaboration in science. Then, I got to implement these lessons in practice through the Science-A-Thon competition. You can see our research paper on a model for improving and strengthening AI's role in self-study and homework completion ",
-        link: { url: "https://drive.google.com/file/d/1NvgCjdY811M6dPyfNNCDtWRrdLIA-dJw/view", text: "here." },
+        heading: "Reconstruction Dataset Research at Hanoi University of Science and Technology",
+        textBeforeLink: "Bringing together two fields that fascinate me—engineering and AI—this research showed me how technology can be used to tackle real-world medical challenges. Our team worked on improving AI-based reconstruction of cranial defects by building a specialized 3D skull dataset and developing a standardized data-processing pipeline. Being part of this project gave me the opportunity to explore how computational engineering can contribute to personalized healthcare. You can read our research paper on deep learning-based cranial defect reconstruction ",
+        link: { url: "https://drive.google.com/file/d/1NvgCjdY811M6dPyfNNCDtWRrdLIA-dJw/view", text: "here" },
+        textAfterLink: ".",
         image: { src: "/image/other-2.png" } 
       }
     ],
@@ -107,7 +121,6 @@ export default function InnovationPage() {
     document.body.style.margin = '0';
     document.body.style.padding = '0';
     document.body.style.overflow = 'hidden';
-    // Đổi sang 'transparent' để nhìn thấy background mờ (blur)
     document.body.style.backgroundColor = 'transparent';
 
     const calculateScale = () => {
@@ -118,7 +131,6 @@ export default function InnovationPage() {
       const scaleX = w / 1920;
       const scaleY = h / 1080;
       
-      // SỬ DỤNG Math.min để tránh bị cắt hình viền ngoài
       setScale(Math.min(scaleX, scaleY));
       setNavScale(scaleX);
     };
@@ -212,22 +224,22 @@ export default function InnovationPage() {
                   )}
                 </div>
   
-                {/* Layout dạng 2 cột hiển thị Text và Ảnh */}
                 {current.isTwoColumn && current.columns ? (
                   <div className={styles.twoColumnLayout}>
                     {current.columns.map((col, idx) => (
                       <div key={idx} className={styles.columnItem}>
-                        {/* Phần nội dung chữ */}
                         <div className={styles.columnContent}>
                           <h3 className={styles.columnHeading}>{col.heading}</h3>
                           <p className={styles.columnText}>
-                            {col.text}
-                            <a href={col.link.url} className={styles.textLink} target="_blank" rel="noopener noreferrer">
-                              {col.link.text}
-                            </a>
+                            {col.textBeforeLink}
+                            {col.link && (
+                              <a href={col.link.url} className={styles.textLink} target="_blank" rel="noopener noreferrer">
+                                {col.link.text}
+                              </a>
+                            )}
+                            {col.textAfterLink}
                           </p>
                         </div>
-                        {/* Phần hình ảnh tài liệu */}
                         {col.image && (
                           <div className={styles.columnImageWrapper}>
                             <Image
@@ -244,7 +256,15 @@ export default function InnovationPage() {
                   </div>
                 ) : (
                   <>
-                    <p className={styles.sportDescription}>{current.desc}</p>
+                    {current.subtitle && <h2 className={styles.slideSubtitle}>{current.subtitle}</h2>}
+                    <p className={styles.sportDescription}>
+                      {current.desc}
+                      {current.link && (
+                        <a href={current.link.url} className={styles.textLink} target="_blank" rel="noopener noreferrer">
+                          {current.link.text}
+                        </a>
+                      )}
+                    </p>
                     <div className={styles.imageGallery}>
                       {current.images.map((img, index) => (
                         <div key={`${activeItem}-${index}`} className={styles.imageWrapper}>
@@ -254,7 +274,7 @@ export default function InnovationPage() {
                             width={0}
                             height={0}
                             sizes="1000px"
-                            style={{ height: '100%', width: 'auto' }}
+                            style={{ height: '100%', width: 'auto', objectFit: 'contain' }} 
                           />
                         </div>
                       ))}
@@ -305,10 +325,13 @@ export default function InnovationPage() {
                             <div className={styles.columnContent}>
                               <h3 className={styles.columnHeading}>{col.heading}</h3>
                               <p className={styles.columnText}>
-                                {col.text}
-                                <a href={col.link.url} className={styles.textLink} target="_blank" rel="noopener noreferrer">
-                                  {col.link.text}
-                                </a>
+                                {col.textBeforeLink}
+                                {col.link && (
+                                  <a href={col.link.url} className={styles.textLink} target="_blank" rel="noopener noreferrer">
+                                    {col.link.text}
+                                  </a>
+                                )}
+                                {col.textAfterLink}
                               </p>
                             </div>
                             {col.image && (
@@ -327,16 +350,25 @@ export default function InnovationPage() {
                       </div>
                     ) : (
                       <>
-                        <p className={styles.sportDescription}>{item.desc}</p>
+                        {item.subtitle && <h2 className={styles.slideSubtitle}>{item.subtitle}</h2>}
+                        <p className={styles.sportDescription}>
+                          {item.desc}
+                          {item.link && (
+                            <a href={item.link.url} className={styles.textLink} target="_blank" rel="noopener noreferrer">
+                              {item.link.text}
+                            </a>
+                          )}
+                        </p>
                         <div className={styles.imageGallery}>
                           {item.images.map((img, idx) => (
                             <div key={`${key}-img-${idx}`} className={styles.imageWrapper}>
                               <Image
                                 src={img.src}
                                 alt={`${item.title} photo ${idx + 1}`}
-                                width={400}
-                                height={300}
-                                style={{ width: '100%', height: 'auto', objectFit: 'cover' }}
+                                width={0}
+                                height={0}
+                                sizes="100vw"
+                                style={{ width: '100%', height: 'auto', objectFit: 'contain' }} 
                               />
                             </div>
                           ))}

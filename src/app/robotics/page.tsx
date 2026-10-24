@@ -5,7 +5,6 @@ import Image from 'next/image';
 import Nav from '@/components/nav/nav';
 import styles from './page.module.css';
 
-// Định nghĩa Type cho cấu trúc có Slide
 type Slide = {
   subtitle: string;
   desc: string;
@@ -18,35 +17,52 @@ type RoboticsItem = {
   slides: Slide[];
 };
 
-// Khung Text mặc định
 const DEFAULT_TEXT =
   "Growing up, I have always been captivated by huge mechanical robots in movies like \"Transformers\" and super intelligent humanoid machines in \"The Terminator.\" Fortunately for me, I got to experience what robots are actually capable of and share my love for these buddies with many students in my city.";
 
-// Dữ liệu các mục
+// ==========================================
+// DỮ LIỆU ĐÃ ĐƯỢC CHỈNH TEXT CHUẨN FILE DOCX
+// VÀ BỔ SUNG ĐẦY ĐỦ ẢNH CHO TỪNG TAB (Slide)
+// ==========================================
 const roboticsData: Record<string, RoboticsItem> = {
   "overwatch": {
     title: "OVERWATCH",
     icon: { src: "/image/icon-polygons.png", w: 205, h: 110, dx: 0, dy: 0 },
     slides: [
       {
+        // Tab 1
         subtitle: "VEX V5 Robotics Competition Road to Nationals, Northern Qualification Season 25-26",
-        desc: "Going into our first tournament of the season, we fully expected to be outmatched by most of our opponents. Fortunately, we adapted and teamed up with a strong ally team, which enabled us to clinch the Tournament Champion award.",
+        desc: "Going into our first tournament of the season, we expected to be outmatched by more experienced teams. By adapting our strategy and forming a strong alliance, we exceeded expectations and claimed the Tournament Champion Award. This experience taught me the value of adaptability, teamwork, and staying competitive under pressure.",
         images: [{ src: "/image/overwatch-1.png" }]
       },
       {
         subtitle: "2025-2026 Asia Open Signature Event V5RC High School",
-        desc: "Although we didn’t win any major award at our first international tournament, I appreciated the chance to face such strong opponents. They showed us how much harder we needed to work to qualify for the World Championship. It was also the debut of our second robot, which would eventually help us leave our mark at the national competition.",
-        images: [{ src: "/image/overwatch-2-1.png" }, { src: "/image/overwatch-2-2.png" }]
+        desc: "Taking our journey beyond national competitions, we had the opportunity to compete internationally at the Asia Open Signature Event in China. Facing strong teams from around the world pushed us to work harder toward our goal of reaching the World Championship. Even more exciting, we earned two awards—First Honor and the Talent Award. The event also marked the debut of our second robot, which would later play a key role at Nationals.",
+        images: [
+          { src: "/image/overwatch-2-1.png" }, 
+          { src: "/image/overwatch-2-2.png" },
+          { src: "/image/overwatch-2-3.png" }
+        ]
       },
       {
+        // Tab 3: Đã có đủ 3 ảnh
         subtitle: "VEX V5 Robotics Competition High School Vietnam National Championship: Push Back",
-        desc: "Of all the tournaments our team has competed in, I am proudest of what we accomplished at this championship. Sleepless nights at the captain’s house paid off with two of the most prestigious awards in the entire tournament: the Robot Skills Champion and Innovate Award. Personally, I redesigned and restructured more than 100 pages of the Engineering Notebook, where I documented and explained the robots’ mechanics with the help of one other teammate.",
-        images: [{ src: "/image/overwatch-3-1.png" }, { src: "/image/overwatch-3-2.png" }, { src: "/image/overwatch-3-3.png" }]
+        desc: "Of all the tournaments we competed in, this championship remains my proudest. Countless late nights of preparation paid off as our team earned two of the tournament’s most prestigious honors: Robot Skills Champion and the Innovate Award. Personally, I worked with a teammate to redesign and restructure our 100+ page Engineering Notebook, documenting and explaining the mechanics and development of our robots.",
+        images: [
+          { src: "/image/overwatch-3-1.png" }, 
+          { src: "/image/overwatch-3-2.png" }, 
+          { src: "/image/overwatch-3-3.png" }
+        ]
       },
       {
+        // Tab 4: Thêm đủ 3 ảnh
         subtitle: "Vietnam Signature: New Year’s Mayhem (2026 VEX Robotics World Championship Qualification)",
-        desc: "Unfortunately, I was unable to attend this event because of a schedule conflict. Still, I looked for meaningful ways to support our team, whether by brainstorming ideas for our third and final robot or by helping them prepare for the judges’ interview. Although I couldn't be there in person, I wanted them to know they had my full support, and I hoped my contributions would help them perform at their best. Eventually, we managed to secure a ticket to the World Championship through high rankings on the Robot Skills leaderboard.",
-        images: [{ src: "/image/overwatch-4.png" }]
+        desc: "Our hard work ultimately paid off as we secured a spot at the 2026 VEX Robotics World Championship through a high ranking on the Robot Skills leaderboard—an exciting milestone in our journey from national competitions to the world stage.",
+        images: [
+          { src: "/image/overwatch-4-1.png" },
+          { src: "/image/overwatch-4-2.png" },
+          { src: "/image/overwatch-4-3.png" }
+        ]
       }
     ]
   },
@@ -56,12 +72,12 @@ const roboticsData: Record<string, RoboticsItem> = {
     slides: [
       {
         subtitle: "Robotics for Good Youth Challenge Vietnam 2025-2026, Hanoi Regional Tournament",
-        desc: "To be well prepared for this event, I spent countless hours studying the rulebook and attending referee briefings. I was so excited to be a co-organizer and referee that I officiated as many matches as I could, from the opening rounds to the final showdowns. Seeing how passionate young competitors were made all the hard work worthwhile. If there had been a 'Referee of the Tournament' award, I think I would have won it.",
+        desc: "As a co-organizer and referee, I spent hours studying the rulebook and attending briefings to prepare for the tournament. I officiated matches from the opening rounds to the finals, and seeing the passion and excitement of young competitors made every effort worthwhile. If there had been a “Referee of the Tournament” award, I’d like to think I had a pretty good shot at it.",
         images: [{ src: "/image/community-1-1.png" }, { src: "/image/community-1-2.png" }, { src: "/image/community-1-3.png" }]
       },
       {
         subtitle: "STEM day at Tran Duy Hung Secondary School",
-        desc: "This is another event I remember fondly, because we got to meet and inspire so many students interested in STEM and robotics. Sharing our robots and answering their questions reminded me of how I once felt discovering this field for the first time. I also got to see a number of impressive student science projects, which showed me how much creativity and potential these young scientists have.",
+        desc: "This event gave me the opportunity to share our robots and inspire younger students curious about STEM. Their excitement reminded me of my own first steps into robotics, while their creative science projects showed me the incredible potential of the next generation of young innovators.",
         images: [{ src: "/image/community-2.png" }]
       }
     ]
@@ -72,12 +88,12 @@ const roboticsData: Record<string, RoboticsItem> = {
     slides: [
       {
         subtitle: "GART Expo 2025",
-        desc: "This is where I got my first taste of robotics. Although I was only a volunteer and not yet an official member, I was treated like family from the moment I arrived. Surrounded by robots, passion projects, and people who shared my curiosity, I experienced the competitive yet close-knit community of robotics engineers, and it motivated me to become a full member of the club.",
+        desc: "GART Expo 2025 was where my journey into robotics began. Starting as a volunteer, I was welcomed into a community filled with creativity, competition, and shared curiosity. Being surrounded by robots, passion projects, and like-minded people inspired me to take the next step and become a full member of the robotics club.",
         images: [{ src: "/image/gart-2025.png" }] 
       },
       {
         subtitle: "GART Expo 2026",
-        desc: "This year, I returned to help organize the event as a member of the Electronic Programming Team. I contributed ideas and guided visitors through DIY, gaming, and exhibition activities at the largest GART Expo in the club’s history. Seeing the event grow so much, and finally getting to be part of the team that made it happen, made me proud of how far I had come since my first visit as a volunteer.",
+        desc: "A year after joining GART Expo as a volunteer, I returned as a member of the Electronic Programming Team, helping organize the largest GART Expo in the club’s history. I contributed ideas and guided visitors through DIY, gaming, and exhibition activities. Being part of the team that made the event possible showed me how far I had come—from discovering robotics to helping others experience it.",
         images: [{ src: "/image/gart-1.png" }, { src: "/image/gart-2.png" }]
       }
     ]
@@ -105,7 +121,6 @@ export default function RoboticsPage() {
     document.body.style.margin = '0';
     document.body.style.padding = '0';
     document.body.style.overflow = 'hidden';
-    // Đã đổi từ '#000' sang 'transparent' để hiển thị background mờ
     document.body.style.backgroundColor = 'transparent';
 
     const calculateScale = () => {
@@ -116,7 +131,6 @@ export default function RoboticsPage() {
       const scaleX = w / 1920;
       const scaleY = h / 1080;
       
-      // SỬ DỤNG Math.min để tránh bị cắt hình viền ngoài
       setScale(Math.min(scaleX, scaleY));
       setNavScale(scaleX);
     };
@@ -221,7 +235,7 @@ export default function RoboticsPage() {
                         width={0}
                         height={0}
                         sizes="1000px"
-                        style={{ width: 'auto', height: '100%', display: 'block' }}
+                        style={{ width: 'auto', height: '100%', display: 'block', objectFit: 'contain' }}
                       />
                     </div>
                   ))}
@@ -277,7 +291,6 @@ export default function RoboticsPage() {
                       )}
                     </div>
 
-                    {/* Render toàn bộ Slide thành danh sách dọc trên mobile */}
                     {item.slides.map((s, idx) => (
                       <div key={`${key}-slide-${idx}`} className={styles.mobileSlide}>
                         <h2 className={styles.slideSubtitle}>{s.subtitle}</h2>
@@ -288,9 +301,10 @@ export default function RoboticsPage() {
                               <Image
                                 src={img.src}
                                 alt={`${item.title} photo`}
-                                width={400}
-                                height={300}
-                                style={{ width: '100%', height: 'auto', objectFit: 'cover' }}
+                                width={0}
+                                height={0}
+                                sizes="100vw"
+                                style={{ width: '100%', height: 'auto', objectFit: 'contain' }}
                               />
                             </div>
                           ))}

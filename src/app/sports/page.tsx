@@ -2,12 +2,11 @@
 
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
-import Nav from '@/components/nav/nav'; // Giữ nguyên component Nav của bạn
+import Nav from '@/components/nav/nav'; 
 import styles from './page.module.css';
 
-// Nội dung trạng thái mặc định (không có popup)
 const DEFAULT_TEXT =
-  "Of course, being a mechanical engineer is a ton of fun, but it can be frustrating when the robot overheats for seemingly no reason. When that happens, I always turn to playing sports to let off steam. My passion for sports didn’t start after I decided to pursue engineering – it has accompanied me ever since I was a child.";
+  "Sports: Of course, being a mechanical engineer is a ton of fun, but it can be frustrating when the robot overheats for seemingly no reason. When that happens, I always turn to playing sports to let off steam. My passion for sports didn't start after I decided to pursue engineering – it has accompanied me ever since I was a child.";
 
 const sportsData = {
   swimming: {
@@ -51,7 +50,6 @@ export default function SportsPage() {
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
-    // Lưu lại style mặc định của body
     const prev = {
       margin: document.body.style.margin,
       padding: document.body.style.padding,
@@ -59,7 +57,6 @@ export default function SportsPage() {
       backgroundColor: document.body.style.backgroundColor,
     };
     
-    // Gỡ background đen để thấy nền mờ (blur)
     document.body.style.margin = '0';
     document.body.style.padding = '0';
     document.body.style.overflow = 'hidden'; 
@@ -74,7 +71,6 @@ export default function SportsPage() {
       const scaleX = w / 1920;
       const scaleY = h / 1080;
       
-      // Đã đổi thành Math.min để chống cắt viền
       setScale(Math.min(scaleX, scaleY));
       setNavScale(scaleX);
     };
@@ -106,7 +102,6 @@ export default function SportsPage() {
       clearTimeout(mountTimeout);
       clearInterval(interval);
       
-      // Phục hồi lại style
       document.body.style.margin = prev.margin;
       document.body.style.padding = prev.padding;
       document.body.style.overflow = prev.overflow;
@@ -119,30 +114,22 @@ export default function SportsPage() {
   return (
     <main className={`${styles.gameContainer} ${isMobile ? styles.isMobile : ''}`}>
       
-      {/* Lớp Nav bar */}
       <div
         className={styles.navLayer}
-        style={{ 
-          transform: isMobile ? 'none' : `scale(${navScale})`, 
-          opacity: isMounted ? 1 : 0 
-        }}
+        style={{ transform: isMobile ? 'none' : `scale(${navScale})`, opacity: isMounted ? 1 : 0 }}
       >
         <Nav />
       </div>
 
       <div
         className={styles.scaleWrapper}
-        style={{ 
-          transform: isMobile ? 'none' : `scale(${scale})`, 
-          opacity: isMounted ? 1 : 0 
-        }}
+        style={{ transform: isMobile ? 'none' : `scale(${scale})`, opacity: isMounted ? 1 : 0 }}
       >
         <div className={styles.consoleBg}></div>
 
-        {/* --- NỘI DUNG CHÍNH --- */}
         <div className={styles.contentArea}>
             
-            {/* Chế độ Desktop/Tablet Ngang */}
+            {/* ----- CHẾ ĐỘ DESKTOP ----- */}
             {!isMobile && (
               current ? (
                 <div key={activeSport} className={styles.popupBox}>
@@ -156,12 +143,7 @@ export default function SportsPage() {
                     }}
                   >
                     <svg width="42" height="42" viewBox="0 0 42 42" fill="none">
-                      <path
-                        d="M3 3L39 39M39 3L3 39"
-                        stroke="#FFFFFF"
-                        strokeWidth="2.5"
-                        strokeLinecap="round"
-                      />
+                      <path d="M3 3L39 39M39 3L3 39" stroke="#FFFFFF" strokeWidth="2.5" strokeLinecap="round" />
                     </svg>
                   </button>
       
@@ -190,7 +172,7 @@ export default function SportsPage() {
                           width={0}
                           height={0}
                           sizes="1000px"
-                          style={{ height: '100%', width: 'auto' }}
+                          style={{ height: '100%', width: 'auto', objectFit: 'contain' }}
                         />
                       </div>
                     ))}
@@ -203,7 +185,7 @@ export default function SportsPage() {
               )
             )}
 
-            {/* Chế độ Điện Thoại: Hiện tất cả nội dung thành danh sách cuộn dọc */}
+            {/* ----- CHẾ ĐỘ ĐIỆN THOẠI ----- */}
             {isMobile && (
                 <div className={styles.mobileScrollContainer}>
                     <div className={styles.captionBox}>
@@ -222,12 +204,7 @@ export default function SportsPage() {
                                 width={sport.icon.w}
                                 height={sport.icon.h}
                                 className={styles.sportIcon}
-                                style={{
-                                    // Trên mobile ta tắt transform tĩnh cho đẹp
-                                    transform: 'none', 
-                                    width: 'auto',
-                                    height: 'clamp(40px, 12vw, 80px)' 
-                                }}
+                                style={{ transform: 'none', width: 'auto', height: 'clamp(40px, 12vw, 80px)' }}
                               />
                             </div>
                             
@@ -239,9 +216,10 @@ export default function SportsPage() {
                                   <Image
                                     src={img.src}
                                     alt={`${sport.title} photo ${idx + 1}`}
-                                    width={400}
-                                    height={300}
-                                    style={{ width: '100%', height: 'auto', objectFit: 'cover' }}
+                                    width={0}
+                                    height={0}
+                                    sizes="100vw"
+                                    style={{ width: '100%', height: 'auto', objectFit: 'contain' }}
                                   />
                                 </div>
                               ))}
@@ -252,7 +230,6 @@ export default function SportsPage() {
                 </div>
             )}
         </div>
-        {/* --- KẾT THÚC NỘI DUNG CHÍNH --- */}
         
       </div>
     </main>

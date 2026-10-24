@@ -17,12 +17,14 @@ type CommunityItem = {
 const DEFAULT_TEXT =
   "Community Services: Engineering became an interest of mine because I wanted to help people and communities overcome the various problems that beset their daily lives, but I also hope to empower them in ways beyond that.";
 
-// 2. Dữ liệu cho các popup
+// ==========================================
+// 2. DỮ LIỆU ĐÃ ĐƯỢC CHỈNH CHUẨN 100% THEO FILE DOCX
+// ==========================================
 const communityData: Record<string, CommunityItem> = {
   "cerebral-palsy": {
     title: "CEREBRAL PALSY FAMILY ASSOCIATION VIETNAM",
     icon: { src: "/image/icon-lantern.png", w: 180, h: 122, dx: 10, dy: -5 },
-    desc: "Despite having known about the hardships faced by patients with cerebral palsy beforehand, I was taken aback by the sheer willpower of the children at the Cerebral Palsy Family Association Vietnam headquarters. They were so adorable and welcoming.",
+    desc: "Despite having known about the hardships faced by patients with cerebral palsy beforehand, I was taken aback by the sheer willpower of the children at the Cerebral Palsy Family Association Vietnam headquarters. Their determination, warmth, and cheerful spirit left a lasting impression on me and made this experience far more meaningful than I had expected.",
     images: [
       { src: "/image/cerebral-1.png" },
       { src: "/image/cerebral-2.png" }
@@ -31,7 +33,7 @@ const communityData: Record<string, CommunityItem> = {
   "advisor-advisee-2025": {
     title: "ADVISOR-ADVISEE 2025",
     icon: { src: "/image/icon-id-badge.png", w: 210, h: 139, dx: 15, dy: -10 },
-    desc: "I used to have nightmares about the high school entrance exam because of how difficult it was to find the right English resources. Thus, I took it upon myself to join a school project to help a 9th grader prepare for it by providing her with a roadmap and proper resources. In turn, she passed with flying colors and gained admission to her dream school.",
+    desc: "Having struggled to find the right English resources for my own high school entrance exam, I wanted to make the journey easier for someone else. Through my school’s Advisor–Advisee project, I mentored a ninth-grade student by creating a study roadmap and sharing useful resources. Seeing her succeed and gain admission to her dream school was one of my most rewarding experiences.",
     images: [
       { src: "/image/advisor-1.png" }
     ]
@@ -39,7 +41,7 @@ const communityData: Record<string, CommunityItem> = {
   "humanitas": {
     title: "HUMANITAS",
     icon: { src: "/image/icon-laptop-blue.png", w: 249, h: 153, dx: 15, dy: 5 },
-    desc: "Our team arrived at an up-and-coming rustic homestay in Ban Lien, Lao Cai, to donate new technology and support nearby homestays in developing their tourism-based economy more effectively.",
+    desc: "Through Humanitas, our team traveled to Ban Lien, Lao Cai, to support local homestays by introducing new technology and practical solutions. Our goal was to help local families strengthen their tourism activities and create more sustainable economic opportunities for their community.",
     images: [
       { src: "/image/humanitas-1.png" },
       { src: "/image/humanitas-2.png" },
@@ -49,7 +51,7 @@ const communityData: Record<string, CommunityItem> = {
   "zero-dong-charity-fair": {
     title: '"ZERO-DONG" CHARITY FAIR',
     icon: null,
-    desc: "The 'Zero-Dong' Charity Fair is an annual event held by alumni of Thai Binh High School for the Gifted, my mom among them, with the aim of providing low-income households with essential goods in preparation for the Tet holiday. I feel deeply connected to this event because Thai Binh was one of the provinces that suffered most during the Vietnamese famine of 1944-1945, and it is also my mom's hometown.",
+    desc: "The “Zero-Dong” Charity Fair, organized annually by alumni of Thai Binh High School for the Gifted, provides essential goods to low-income families before Tet. The event holds special meaning for me: Thai Binh, my mother’s hometown, was deeply affected by the 1944–1945 famine. Taking part connects me not only to my family’s roots, but also to a tradition of giving back to the community.",
     images: [
       { src: "/image/zero-dong-1.png" },
       { src: "/image/zero-dong-2.png" }
@@ -58,7 +60,7 @@ const communityData: Record<string, CommunityItem> = {
   "beaconinrain-sos": {
     title: "BEACONINRAIN SOS ALERT SYSTEM",
     icon: { src: "/image/icon-sos.png", w: 231, h: 135, dx: 15, dy: -5 },
-    desc: "After witnessing first-hand the damage caused by typhoons and natural disasters, I set out to create a device to help rescue parties reach those in need. Although programming, assembling the devices, and setting up the website was arduous, it was all worth it to see them give people a beacon of hope in the unrelenting rain.",
+    desc: "After witnessing firsthand the damage caused by typhoons and natural disasters, I set out to develop BeaconInRain, an SOS alert system designed to help rescuers locate people in need. From programming and assembling the devices to building the website, the process was challenging but deeply rewarding—turning engineering into a small beacon of hope in the storm.",
     images: [
       { src: "/image/sos-1.png" },
       { src: "/image/sos-2.png" },
@@ -68,7 +70,7 @@ const communityData: Record<string, CommunityItem> = {
   "volunteer-ba-vi": {
     title: "VOLUNTEER WORK IN BA VI",
     icon: { src: "/image/icon-solar-panel.png", w: 201, h: 136, dx: 15, dy: -10 },
-    desc: "While working to support a local business in Ba Vi, we got to install solar-powered lights, learn about herbal plants, and plant them for harvest.",
+    desc: "Supporting a local business in Ba Vi gave me the chance to contribute through hands-on work, from installing solar-powered lights to learning about and planting herbal crops for future harvest. The experience showed me how simple, practical solutions can support both sustainability and local livelihoods.",
     images: [
       { src: "/image/bavi-1.png" },
       { src: "/image/bavi-2.png" }
@@ -77,7 +79,7 @@ const communityData: Record<string, CommunityItem> = {
   "blue-racetrack": {
     title: '"BLUE RACETRACK" SWIMMING CHALLENGE',
     icon: { src: "/image/icon-goggles.png", w: 181, h: 59, dx: 15, dy: -20 },
-    desc: "Since I had a great relationship with swimming as a child because of my father, I figured, why not organize a competition to encourage children to learn how to swim and, better yet, encourage their parents to give it a try?",
+    desc: "Swimming has been part of my life since childhood, thanks to my father. Inspired by those memories, I helped organize the “Blue Racetrack” Swimming Challenge to encourage children to discover the joy of swimming—and perhaps inspire their parents to dive in alongside them.",
     images: [
       { src: "/image/swimming-challenge-1.png" },
       { src: "/image/swimming-challenge-2.png" },
@@ -107,7 +109,6 @@ export default function CommunityPage() {
     document.body.style.margin = '0';
     document.body.style.padding = '0';
     document.body.style.overflow = 'hidden';
-    // Đổi sang 'transparent' để nhìn thấy background mờ
     document.body.style.backgroundColor = 'transparent';
 
     const calculateScale = () => {
@@ -118,7 +119,6 @@ export default function CommunityPage() {
       const scaleX = w / 1920;
       const scaleY = h / 1080;
       
-      // SỬ DỤNG Math.min để tránh bị cắt hình viền ngoài
       setScale(Math.min(scaleX, scaleY));
       setNavScale(scaleX);
     };
@@ -223,7 +223,7 @@ export default function CommunityPage() {
                         width={0}
                         height={0}
                         sizes="1000px"
-                        style={{ height: '100%', width: 'auto' }}
+                        style={{ height: '100%', width: 'auto', objectFit: 'contain' }}
                       />
                     </div>
                   ))}
@@ -273,9 +273,10 @@ export default function CommunityPage() {
                           <Image
                             src={img.src}
                             alt={`${item.title} photo ${idx + 1}`}
-                            width={400}
-                            height={300}
-                            style={{ width: '100%', height: 'auto', objectFit: 'cover' }}
+                            width={0}
+                            height={0}
+                            sizes="100vw"
+                            style={{ width: '100%', height: 'auto', objectFit: 'contain' }}
                           />
                         </div>
                       ))}

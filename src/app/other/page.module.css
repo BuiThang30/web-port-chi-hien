@@ -16,7 +16,6 @@
   z-index: 1;
 }
 
-/* Lớp nền mờ thay vì đen */
 .gameContainer::before {
   content: "";
   position: absolute;
@@ -51,12 +50,10 @@
   z-index: 1000;
 }
 
-/* Background trang Other */
 .consoleBg {
   width: 100%;
   height: 100%;
   background-image: url('/image/background-other.png'); 
-  /* Chuyển thành contain để đảm bảo không cắt viền trên màn hình rộng */
   background-size: contain;
   background-position: center;
   background-repeat: no-repeat;
@@ -65,7 +62,6 @@
   left: 0;
 }
 
-/* Container chứa Content để hỗ trợ layout Desktop và Mobile */
 .contentArea {
   position: absolute;
   width: 100%;
@@ -79,7 +75,7 @@
   to   { opacity: 1; transform: translateY(0); }
 }
 
-/* ===== Popup Box Kính mờ ===== */
+/* ===== Popup Box ===== */
 .popupBox {
   position: absolute;
   left: 106px;
@@ -90,8 +86,8 @@
   padding: 34px 70px 47px 44px;
   border-radius: 15px;
   border: 2px solid #FFF;
-  background: rgba(144, 203, 249, 0.45);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+  background: #002E3BB2; 
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
   backdrop-filter: blur(12px);
   display: flex;
   flex-direction: column;
@@ -108,6 +104,7 @@
   font-weight: 400;
   line-height: 1;
   margin: 0;
+  padding-left: 15px; 
   text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.4);
 }
 
@@ -136,44 +133,59 @@
 }
 
 /* ========================================================
-   BỐ CỤC ACHIEVEMENTS (Slide Hình ngang dọc lẫn lộn)
+   1. BỐ CỤC ACHIEVEMENTS (GIỮ NGUYÊN)
    ======================================================== */
 .achievementsLayout {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   width: 100%;
   height: 100%;
-  gap: 20px;
+  gap: 16px;
+}
+
+.topSection {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 165px; 
+  gap: 30px;
+  align-items: center;
 }
 
 .titleColumn {
-  width: 400px;
+  width: max-content; 
   flex-shrink: 0;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
-  margin-top: 10px;
+  justify-content: center;
 }
 
-.sliderColumn {
+.topSliderContainer {
   flex: 1;
+  height: 100%;
+  overflow: hidden;
+}
+
+.bottomSlidersContainer {
+  width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 12px; 
-  overflow: hidden; 
-  justify-content: center;
+  gap: 16px;
+  overflow: hidden;
 }
 
 .sliderWrapper {
   width: 100%;
-  height: 175px; 
+  height: 165px; 
   overflow: hidden;
   position: relative;
+  display: flex;
+  align-items: center;
 }
 
 .sliderRow {
   display: flex;
-  gap: 12px;
+  gap: 16px;
   width: max-content;
   height: 100%;
 }
@@ -181,11 +193,8 @@
 .certImageWrapper {
   position: relative;
   height: 100%; 
-  background-color: #FFF; 
+  width: auto;
   flex-shrink: 0;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-  border-radius: 4px;
-  overflow: hidden;
   display: flex; 
   align-items: center;
   justify-content: center;
@@ -194,56 +203,136 @@
 .certImg {
   width: auto;
   height: 100%;
+  max-width: none !important; /* Đặc quyền dành riêng cho thanh trượt ngang */
+  object-fit: contain; 
   display: block;
 }
 
-/* === CSS KEYFRAMES CHO ANIMATION TRƯỢT === */
-@keyframes slideLeft {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
-}
-
-@keyframes slideRight {
-  0% { transform: translateX(-50%); }
-  100% { transform: translateX(0); }
-}
-
-.slideLeft {
-  animation: slideLeft 30s linear infinite;
-}
-.slideRight {
-  animation: slideRight 30s linear infinite;
-}
-
-.sliderRow:hover {
-  animation-play-state: paused;
-}
+@keyframes slideLeft { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+@keyframes slideRight { 0% { transform: translateX(-50%); } 100% { transform: translateX(0); } }
+.slideLeft { animation: slideLeft 60s linear infinite; }
+.slideRight { animation: slideRight 60s linear infinite; }
+.sliderRow:hover { animation-play-state: paused; }
 
 
 /* ========================================================
-   BỐ CỤC PLACEHOLDER (CHO HOBBIES)
+   2. BỐ CỤC HOBBIES - FIX LỖI ẢNH BỊ CẮT TRÀN
    ======================================================== */
-.placeholderLayout {
+.hobbiesLayout {
   display: flex;
   flex-direction: column;
   width: 100%;
   height: 100%;
+  align-items: center;
+  justify-content: space-between;
 }
 
-.placeholderText {
-  margin-top: 30px;
-  color: #FFFFFA;
+.hobbiesHeader {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 20px;
+}
+
+.hobbiesContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  width: 100%;
+  overflow: hidden;
+}
+
+.hobbiesImageGallery {
+  display: flex;
+  gap: 16px; /* THU HẸP KHOẢNG CÁCH CHO ẢNH GẦN NHAU HƠN */
+  justify-content: center;
+  align-items: center;
+  height: 400px; 
+  width: 100%;
+}
+
+.hobbyImageCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  height: 100%;
+  flex: 0 1 auto; /* PHÉP MÀU 1: Cho phép thu nhỏ lại nếu khung chứa bị chật */
+  min-width: 0;
+}
+
+.hobbyImgWrapper {
+  height: 100%;
+  min-width: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* CLASS RIÊNG CHO HOBBIES: KHÔNG BỊ TRÀN VIỀN */
+.hobbyImg {
+  height: 100%; 
+  width: auto;  
+  max-width: 100% !important; /* PHÉP MÀU 2: Giới hạn bề ngang không được tràn ra ngoài thẻ card */
+  object-fit: contain;
+  display: block;
+}
+
+.hobbyLabel {
+  color: #FFF;
   font-family: "Be Vietnam Pro", sans-serif;
   font-size: 26px;
-  font-weight: 400;
-  line-height: 1.6;
+  font-weight: 500;
+  text-align: center;
 }
 
+.hobbyCaption {
+  color: #FFF;
+  font-family: "Be Vietnam Pro", sans-serif;
+  font-size: 28px;
+  font-weight: 400;
+  margin-top: 30px;
+  text-align: center;
+}
+
+/* --- PHÂN TRANG CHO HOBBIES --- */
+.paginationContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  margin-top: auto; 
+  padding-bottom: 10px;
+  flex-shrink: 0;
+}
+
+.pageButton {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 2px solid #FFF;
+  background: transparent;
+  color: #FFF;
+  font-family: "Be Vietnam Pro", sans-serif;
+  font-size: 20px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  outline: none;
+}
+.pageButton:hover { background: rgba(255, 255, 255, 0.2); }
+.activePage { border-color: #FFD700; color: #FFD700; box-shadow: 0 0 8px rgba(255, 215, 0, 0.4); }
+
+
 /* =========================================
-   2. CHẾ ĐỘ MOBILE / TABLET DỌC (<= 900px)
+   3. CHẾ ĐỘ MOBILE / TABLET DỌC (<= 900px)
    ========================================= */
 @media (max-width: 900px) {
-  
   .gameContainer {
     display: block;
     position: relative;
@@ -253,84 +342,39 @@
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
   }
-
-  .gameContainer::before {
-    position: fixed;
-  }
-
-  .scaleWrapper {
-    width: 100%;
-    height: auto;
-    min-height: 100dvh;
-    transform: none !important; 
-  }
-
-  .navLayer {
-    width: 100%;
-    height: auto;
-    position: relative; 
-  }
-
-  .consoleBg {
-    position: fixed;
-    background-size: cover; 
-    background-position: center top;
-  }
-  
-  .contentArea {
-    position: relative;
-    width: 100%;
-    height: auto;
-    padding-top: 20px;
-  }
-
-  .mobileScrollContainer {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    padding: 20px 5vw 40px;
-  }
+  .gameContainer::before { position: fixed; }
+  .scaleWrapper { width: 100%; height: auto; min-height: 100dvh; transform: none !important; }
+  .navLayer { width: 100%; height: auto; position: relative; }
+  .consoleBg { position: fixed; background-size: cover; background-position: center top; }
+  .contentArea { position: relative; width: 100%; height: auto; padding-top: 20px; }
+  .mobileScrollContainer { display: flex; flex-direction: column; gap: 20px; padding: 20px 5vw 40px; }
 
   .popupBox {
-    position: relative;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: auto;
-    padding: 20px;
-    border-radius: 12px;
-    animation: none;
-    backdrop-filter: blur(16px);
+    position: relative; left: 0; top: 0; width: 100%; height: auto;
+    padding: 20px; border-radius: 12px; animation: none; backdrop-filter: blur(16px);
   }
 
-  .titleColumn {
-    width: 100%;
-    margin-top: 0;
-    margin-bottom: 20px;
-    align-items: center;
-  }
+  .topSection { flex-direction: column; height: auto; gap: 16px; }
+  .titleColumn { width: 100%; align-items: center; margin-top: 0; }
+  .sportTitle { font-size: clamp(48px, 12vw, 80px); text-align: center; padding-left: 0; }
+  .topSliderContainer { width: 100%; height: 120px; }
+  .bottomSlidersContainer { gap: 16px; }
+  .sliderWrapper { height: 120px; }
+  .certImageWrapper { height: 120px; }
 
-  .sportTitle {
-    font-size: clamp(48px, 12vw, 80px);
-    text-align: center;
-  }
-
-  /* Thu nhỏ chiều cao của thanh trượt ảnh trên thiết bị di động để vừa màn hình */
-  .sliderWrapper {
-    height: 110px; 
+  .hobbiesImageGallery { flex-direction: column; height: auto; gap: 16px; }
+  .hobbyImageCard { width: 100%; height: auto; flex: unset; }
+  .hobbyImgWrapper { height: auto; width: 100%; }
+  
+  .hobbyImg { 
+    width: 100% !important; 
+    height: auto !important; 
   }
   
-  .certImageWrapper {
-    height: 110px;
-  }
+  .hobbyLabel { font-size: 18px; }
+  .hobbyCaption { font-size: 20px; margin-top: 15px; text-align: center; }
   
-  .sliderColumn {
-    gap: 16px;
-  }
-
-  .placeholderText {
-    margin-top: 10px;
-    font-size: clamp(16px, 4vw, 20px);
-    text-align: center;
-  }
+  .mobileSlidesList { display: flex; flex-direction: column; gap: 40px; width: 100%; }
+  .mobileSlideItem { display: flex; flex-direction: column; gap: 15px; padding-bottom: 20px; border-bottom: 1px solid rgba(255, 255, 255, 0.2); }
+  .mobileSlideItem:last-child { border-bottom: none; }
 }

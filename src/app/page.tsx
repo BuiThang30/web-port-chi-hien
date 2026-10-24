@@ -17,16 +17,18 @@ const memoryData = {
     desc: "Growing up, I have always been captivated by huge mechanical robots in movies like \"Transformers\" and super intelligent humanoid machines in \"The Terminator.\" Fortunately for me, I got to experience what robots are actually capable of and share my love for these buddies with many students in my city."
   },
   INNOVATION: {
-    title: "INNOVATION AND RESEARCH",
-    categoryPath: "innovation",
-    items: [
-      { name: "TEKMONK →", id: "tekmonk" },
-      { name: "VSIC →", id: "vsic" },
-      { name: "WICO →", id: "wico" },
-      { name: "OTHER RESEARCH →", id: "other-research" }
-    ],
-    desc: "Innovation and Research: Before I even knew what engineering meant, I had long adored learning about the many scientific phenomena that surround us every day. So it comes as no surprise that I quickly took a liking to researching and developing devices and tools to solve problems, whether major or minor."
-  },
+      title: "INNOVATION AND RESEARCH",
+      categoryPath: "innovation",
+      items: [
+        { name: "TEKMONK →", id: "tekmonk" },
+        { name: "VSIC →", id: "vsic" },
+        { name: "WICO →", id: "wico" },
+        { name: "INTERNSHIP →", id: "internship" },
+        { name: "VIETNAM SUMMER SCHOOL OF SCIENCE →", id: "vietnam-summer-school-of-science" },
+        { name: "OTHER RESEARCH →", id: "other-research" }
+      ],
+      desc: "Innovation and Research: Before I even knew what engineering meant, I had long adored learning about the many scientific phenomena that surround us every day. So it comes as no surprise that I quickly took a liking to researching and developing devices and tools to solve problems, whether major or minor."
+    },
   SPORTS: {
     title: "SPORTS",
     categoryPath: "sports",
