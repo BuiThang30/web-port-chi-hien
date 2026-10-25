@@ -50,7 +50,7 @@ const communityData: Record<string, CommunityItem> = {
   },
   "zero-dong-charity-fair": {
     title: '"ZERO-DONG" CHARITY FAIR',
-    icon: null,
+    icon: { src: "/image/icon-zero.png", w: 249, h: 153, dx: 0, dy: 0 },
     desc: "The “Zero-Dong” Charity Fair, organized annually by alumni of Thai Binh High School for the Gifted, provides essential goods to low-income families before Tet. The event holds special meaning for me: Thai Binh, my mother’s hometown, was deeply affected by the 1944–1945 famine. Taking part connects me not only to my family’s roots, but also to a tradition of giving back to the community.",
     images: [
       { src: "/image/zero-dong-1.png" },

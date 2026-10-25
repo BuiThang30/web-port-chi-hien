@@ -10,9 +10,9 @@ const memoryData = {
     title: "ROBOTICS",
     categoryPath: "robotics",
     items: [
+      { name: "GART →", id: "gart" },
       { name: "OVERWATCH →", id: "overwatch" },
-      { name: "COMMUNITY EVENTS →", id: "community-events" },
-      { name: "GART →", id: "gart" }
+      { name: "COMMUNITY EVENTS →", id: "community-events" }
     ],
     desc: "Growing up, I have always been captivated by huge mechanical robots in movies like \"Transformers\" and super intelligent humanoid machines in \"The Terminator.\" Fortunately for me, I got to experience what robots are actually capable of and share my love for these buddies with many students in my city."
   },

@@ -14,21 +14,21 @@ type NavItem = {
 };
 
 const NAV_ITEMS: NavItem[] = [
-  { name: 'HOME', path: '/', color: '#FFFFFF', items: [] },
+  { name: 'HOME', path: '/', color: '#FFFD00', items: [] },
   {
     name: 'ROBOTICS',
     path: '/robotics',
     color: '#FFFD00',
     items: [
+      { name: 'GART', id: 'gart' },
       { name: 'OVERWATCH', id: 'overwatch' },
-      { name: 'COMMUNITY EVENTS', id: 'community-events' },
-      { name: 'GART', id: 'gart' }
+      { name: 'COMMUNITY EVENTS', id: 'community-events' }
     ]
   },
   {
     name: 'INNOVATION AND RESEARCH',
     path: '/innovation',
-    color: '#D3A7CE', 
+    color: '#FFFD00', 
     items: [
       { name: 'TEKMONK', id: 'tekmonk' },
       { name: 'VSIC', id: 'vsic' },
@@ -41,8 +41,8 @@ const NAV_ITEMS: NavItem[] = [
   {
     name: 'SPORTS',
     path: '/sports',
-    color: '#00FFF4',
-    subColor: '#0A5C6E', 
+    color: '#FFFD00',
+    subColor: '#FFFD00', 
     items: [
       { name: 'SWIMMING', id: 'swimming' },
       { name: 'SOCCER', id: 'soccer' },
@@ -52,7 +52,7 @@ const NAV_ITEMS: NavItem[] = [
   {
     name: 'COMMUNITY SERVICES',
     path: '/community',
-    color: '#BC4A92',
+    color: '#FFFD00',
     items: [
       { name: 'CEREBRAL PALSY FAMILY ASSOCIATION VIETNAM', id: 'cerebral-palsy' },
       { name: 'ADVISOR-ADVISEE 2025', id: 'advisor-advisee-2025' },
@@ -66,7 +66,7 @@ const NAV_ITEMS: NavItem[] = [
   {
     name: 'OTHER',
     path: '/other',
-    color: '#FFFB0E',
+    color: '#FFFD00',
     items: [
       { name: 'ACHIEVEMENTS', id: 'achievements' },
       { name: 'HOBBIES', id: 'hobbies' }
