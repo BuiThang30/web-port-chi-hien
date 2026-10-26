@@ -30,6 +30,11 @@ const roboticsData: Record<string, RoboticsItem> = {
     icon: { src: "/image/icon-polygons.png", w: 205, h: 110, dx: 0, dy: 0 },
     slides: [
       {
+        subtitle: "VEX V5 Robotics Competition Road to Nationals, Northern Qualification Season 25-26",
+        desc: "Going into our first tournament of the season, we expected to be outmatched by more experienced teams. By adapting our strategy and forming a strong alliance, we exceeded expectations and claimed the Tournament Champion Award. This experience taught me the value of adaptability, teamwork, and staying competitive under pressure.",
+        images: [{ src: "/image/overwatch-1.jpg" }]
+      },
+      {
         subtitle: "2025-2026 Asia Open Signature Event V5RC High School",
         desc: "Taking our journey beyond national competitions, we had the opportunity to compete internationally at the Asia Open Signature Event in China. Facing strong teams from around the world pushed us to work harder toward our goal of reaching the World Championship. Even more exciting, we earned two awards—First Honor and the Talent Award. The event also marked the debut of our second robot, which would later play a key role at Nationals.",
         images: [
@@ -37,11 +42,6 @@ const roboticsData: Record<string, RoboticsItem> = {
           { src: "/image/overwatch-2-2.png" },
           { src: "/image/overwatch-2-3.png" }
         ]
-      },
-      {
-        subtitle: "VEX V5 Robotics Competition Road to Nationals, Northern Qualification Season 25-26",
-        desc: "Going into our first tournament of the season, we expected to be outmatched by more experienced teams. By adapting our strategy and forming a strong alliance, we exceeded expectations and claimed the Tournament Champion Award. This experience taught me the value of adaptability, teamwork, and staying competitive under pressure.",
-        images: [{ src: "/image/overwatch-1.png" }]
       },
       {
         // Tab 3: Đã có đủ 3 ảnh
